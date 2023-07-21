@@ -69,7 +69,7 @@
     <div class="row align-items-center">
     <div class="col-lg-3 col-md-3 col-7">
 
-    <a class="navbar-brand" href="{{route('home')}}">
+    <a class="navbar-brand" href="{{ route('home') }}">
     <img src="{{asset('/')}}website/assets/images/logo/logo.svg" alt="Logo">
     </a>
 
