@@ -29,6 +29,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::get('/category/add', [CategoryController::class,'index'])->name('category.add');
     Route::post('/category/create',[CategoryController::class,'store'])->name('category.create');
+    Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
+    Route::post('/category/update/{id}',[CategoryController::class,'update'])->name('category.update');
     Route::get('/category/manage',[CategoryController::class,'manage'])->name('category.manage');
 
 

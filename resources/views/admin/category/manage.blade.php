@@ -7,6 +7,8 @@
                     <div class="card-body">
                         <h4 class="card-title">Category Table</h4>
                         <h6 class="card-subtitle">Showing All Category</h6>
+                        <h2 class="text-center text-success fw-bold">{{ session('message') }}</h2>
+
                         <div class="table-responsive m-t-40">
                             <table id="myTable" class="table border table-striped">
                                 <thead>
@@ -31,7 +33,7 @@
                                         </td>
                                         <td>{{ $category->status ==1 ? 'Published' : 'Unpublished' }}</td>
                                         <td>
-                                            <a href="" class="btn btn-success btn-sm">
+                                            <a href="{{ route('category.edit',['id'=>$category->id]) }}" class="btn btn-success btn-sm">
                                                 <i class="ti-reddit"></i>
                                             </a>
                                             <a href="" class="btn btn-danger btn-sm">
