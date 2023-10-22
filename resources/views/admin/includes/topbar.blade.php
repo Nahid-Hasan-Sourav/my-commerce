@@ -59,19 +59,19 @@
                                         <div class="message-center">
                                             <!-- Message -->
                                             <a href="javascript:void(0)">
-                                                <div class="btn btn-danger btn-circle text-white"><i class="fa fa-link"></i></div>
+                                                <div class="text-white btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
                                                 <div class="mail-contnet">
                                                     <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="javascript:void(0)">
-                                                <div class="btn btn-success btn-circle text-white"><i class="ti-calendar"></i></div>
+                                                <div class="text-white btn btn-success btn-circle"><i class="ti-calendar"></i></div>
                                                 <div class="mail-contnet">
                                                     <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="javascript:void(0)">
-                                                <div class="btn btn-info btn-circle text-white"><i class="ti-settings"></i></div>
+                                                <div class="text-white btn btn-info btn-circle"><i class="ti-settings"></i></div>
                                                 <div class="mail-contnet">
                                                     <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
                                             </a>
@@ -84,7 +84,7 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="nav-link text-center link" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                        <a class="text-center nav-link link" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
                                     </li>
                                 </ul>
                             </div>
@@ -133,7 +133,7 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="nav-link text-center link" href="javascript:void(0);"> <strong>See all e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
+                                        <a class="text-center nav-link link" href="javascript:void(0);"> <strong>See all e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
                                     </li>
                                 </ul>
                             </div>
@@ -172,7 +172,7 @@
                                          <!-- Accordian -->
                                         <div class="accordion" id="accordionExample">
                                             <div class="card m-b-0">
-                                                <div class="card-header bg-white p-0" id="headingOne">
+                                                <div class="p-0 bg-white card-header" id="headingOne">
                                                     <h5 class="mb-0">
                                                         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                             Collapsible Group Item #1
@@ -187,7 +187,7 @@
                                                 </div>
                                             </div>
                                             <div class="card m-b-0">
-                                                <div class="card-header bg-white p-0" id="headingTwo">
+                                                <div class="p-0 bg-white card-header" id="headingTwo">
                                                     <h5 class="mb-0">
                                                         <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
                                                             aria-controls="collapseTwo">
@@ -202,7 +202,7 @@
                                                 </div>
                                             </div>
                                             <div class="card m-b-0">
-                                                <div class="card-header bg-white p-0" id="headingThree">
+                                                <div class="p-0 bg-white card-header" id="headingThree">
                                                     <h5 class="mb-0">
                                                         <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
                                                             aria-controls="collapseThree">
@@ -218,7 +218,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="col-lg-3  m-b-30">
+                                    <li class="col-lg-3 m-b-30">
                                         <h4 class="m-b-20">CONTACT US</h4>
                                         <!-- Contact -->
                                         <form>
@@ -229,7 +229,7 @@
                                             <div class="form-group">
                                                 <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
                                             </div>
-                                            <button type="submit" class="btn btn-info text-white">Submit</button>
+                                            <button type="submit" class="text-white btn btn-info">Submit</button>
                                         </form>
                                     </li>
                                     <li class="col-lg-3 col-xlg-4 m-b-30">
@@ -268,14 +268,17 @@
                                 <!-- text-->
                                 <div class="dropdown-divider"></div>
                                 <!-- text-->
-                                <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                                </form>
                                 <!-- text-->
                             </div>
                         </li>
                         <!-- ============================================================== -->
                         <!-- End User Profile -->
                         <!-- ============================================================== -->
-                        <li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li>
+                        <li class="nav-item right-side-toggle"> <a class="nav-link waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li>
                     </ul>
                 </div>
             </nav>
