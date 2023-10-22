@@ -36,7 +36,7 @@
                                             <a href="{{ route('category.edit',['id'=>$category->id]) }}" class="btn btn-success btn-sm">
                                                 <i class="ti-reddit"></i>
                                             </a>
-                                            <a href="" class="btn btn-danger btn-sm">
+                                            <a href="{{ route('category.delete',['id'=>$category->id]) }}" class="btn btn-danger btn-sm">
                                                 <i class="ti-trash"></i>
                                             </a>
                                         </td>
