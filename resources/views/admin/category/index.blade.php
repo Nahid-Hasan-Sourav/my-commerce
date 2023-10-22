@@ -7,13 +7,14 @@
             <h4 class="card-title"></h4>
 
             <form class="form-horizontal p-t-20" action="{{ route('category.create') }}" method="POST" enctype="multipart/form-data">
+                <h2 class="text-center text-success fw-bold">{{ session('message') }}</h2>
                 @csrf
                 <div class="form-group row">
                     <label for="exampleInputuname3" class="col-sm-3 control-label">Category Name*</label>
                     <div class="col-sm-9">
                         <div class="input-group">
-                            <span class="input-group-text"><i class="ti-user"></i></span>
-                            <input type="text" class="form-control" name="name" id="exampleInputuname3" placeholder="Username">
+                           
+                            <input type="text" class="form-control" name="name" id="exampleInputuname3" placeholder="Category Name">
                         </div>
                     </div>
                 </div>
@@ -37,14 +38,14 @@
                         <label class="me-3">
                             <input type="radio" name="status" value="1" class="me-1">Published
                         </label>
-                        <label class=" ">
+                        <label class="">
                             <input type="radio" name="status" value="2" class="me-1">UnPublished
                         </label>
                     </div>
                 </div>
                 <div class="form-group row m-b-0">
                     <div class="offset-sm-3 col-sm-9">
-                        <button type="submit" class="btn btn-success waves-effect waves-light text-white mt-4">Create New Category</button>
+                        <button type="submit" class="mt-4 text-white btn btn-success waves-effect waves-light">Create New Category</button>
                     </div>
                 </div>
             </form>
