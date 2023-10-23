@@ -3,6 +3,7 @@
 use App\Http\Controllers\MyCommerceController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\category\CategoryController;
+use App\Http\Controllers\subcategory\SubCategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     //category module end here
 
     //sub category start here
-    
+    Route::get('/subcategory/add',[SubCategoryController::class, 'index'])->name('subcategory.add');
+    Route::get('/subcategory/mange',[SubCategoryController::class, 'manage'])->name('subcategory.manage');
+    Route::post('/subcategory/create',[SubCategoryController::class, 'create'])->name('subcategory.create');
     //sub category end here
 
 
