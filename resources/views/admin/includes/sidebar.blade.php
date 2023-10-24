@@ -25,7 +25,7 @@
 
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Category Module</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Sub-category Module</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li>
                                     <a href="{{ route('subcategory.add') }}">Add Sub-Category </a>

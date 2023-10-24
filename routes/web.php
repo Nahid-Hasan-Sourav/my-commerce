@@ -37,15 +37,18 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::post('/category/update/{id}',[CategoryController::class,'update'])->name('category.update');
     Route::get('category/delete/{id}',[CategoryController::class,'delete'])->name('category.delete');
     //category crud end here
-     
-    //all category showing 
+
+    //all category showing
     Route::get('/category/manage',[CategoryController::class,'manage'])->name('category.manage');
     //category module end here
 
     //sub category start here
     Route::get('/subcategory/add',[SubCategoryController::class, 'index'])->name('subcategory.add');
-    Route::get('/subcategory/mange',[SubCategoryController::class, 'manage'])->name('subcategory.manage');
     Route::post('/subcategory/create',[SubCategoryController::class, 'create'])->name('subcategory.create');
+    Route::get('/subcategory/manage',[SubCategoryController::class, 'manage'])->name('subcategory.manage');
+    Route::get('/subcategory/edit/{id}',[SubCategoryController::class, 'edit'])->name('subcategory.edit');
+    Route::post('/subcategory/update/{id}',[SubCategoryController::class, 'edit'])->name('subcategory.update');
+    Route::get('/subcategory/delete/{id}',[SubCategoryController::class, 'delete'])->name('subcategory.delete');
     //sub category end here
 
 

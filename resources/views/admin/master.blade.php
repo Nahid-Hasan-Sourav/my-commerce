@@ -29,6 +29,12 @@
         href="{{asset('/')}}admin/assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css"
         href="{{asset('/')}}admin/assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
+
+        <!-- this is for sweet alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9">
+<link href="{{ asset('/') }}admin/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+
+
         {{-- end manage category table css --}}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -117,6 +123,12 @@
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
+
+<!-- swwet alert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
 <!--morris JavaScript -->
 <script src="{{asset('/')}}admin/assets/node_modules/raphael/raphael-min.js"></script>
 <script src="{{asset('/')}}admin/assets/node_modules/morrisjs/morris.min.js"></script>

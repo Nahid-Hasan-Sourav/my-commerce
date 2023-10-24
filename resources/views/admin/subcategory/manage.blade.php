@@ -5,43 +5,61 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Category Table</h4>
+                        <h4 class="card-title">Sub-Category Table</h4>
                         <h6 class="card-subtitle">Showing All Category</h6>
-                        <h2 class="text-center text-success fw-bold">{{ session('message') }}</h2>
+                        <script>
+                            // success message popup notification
+                            @if(Session::has('message'))
+                            toastr.success("{{ Session::get('message') }}", "Success", {
+                            "toastClass": "toast bg-success text-white",
+                            "progressBarClass": "bg-success"
+                            });
 
+                            @endif
+
+                            // error message popup notification
+                            @if(Session::has('error'))
+                            toastr.error("{{ Session::get('error') }}", "Error", {
+                             "toastClass": "toast bg-danger text-white",
+                             "progressBarClass": "bg-danger"
+                             });
+                            @endif
+                        </script>
                         <div class="table-responsive m-t-40">
                             <table id="myTable" class="table border table-striped">
                                 <thead>
                                     <tr>
                                         <th>SL NO</th>
                                         <th>Category Name</th>
-                                        <th>Category Description</th>
+                                        <th>Sub-category name</th>
+                                        <th>Description</th>
                                         <th>Image</th>
-                                        <th>Publication Status</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                    {{-- @foreach ($categories as $category )
+
+                                    @foreach ($subcategories as $subcategory )
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $category->name }}</td>
-                                        <td>{{ $category->description }}</td>
+                                        <td>{{ $subcategory->name }}</td>
+                                        <td>{{ $subcategory->category->name }}</td>
+                                        <td>{{ $subcategory->description }}</td>
                                         <td>
-                                            <img src="{{ asset($category->image) }}" alt="img" width="50px" height="50px">
+                                            <img src="{{ asset($subcategory->image) }}" alt="img" width="50px" height="50px">
                                         </td>
-                                        <td>{{ $category->status ==1 ? 'Published' : 'Unpublished' }}</td>
+                                        <td>{{ $subcategory->status ==1 ? 'Published' : 'Unpublished' }}</td>
                                         <td>
-                                            <a href="{{ route('category.edit',['id'=>$category->id]) }}" class="btn btn-success btn-sm">
+                                            <a href="{{ route('subcategory.edit',['id'=>$subcategory->id]) }}" class="btn btn-success btn-sm">
                                                 <i class="ti-reddit"></i>
                                             </a>
-                                            <a href="{{ route('category.delete',['id'=>$category->id]) }}" class="btn btn-danger btn-sm">
+                                            <a href="{{ route('subcategory.delete',['id'=>$subcategory->id]) }}" class="btn btn-danger btn-sm">
                                                 <i class="ti-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
-                                    @endforeach --}}
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

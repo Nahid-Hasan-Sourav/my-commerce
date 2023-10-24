@@ -4,9 +4,9 @@
 <div class="col-lg-12"></div>
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Add Sub Category Form</h4>
+            <h4 class="card-title">Edit Sub Category Form</h4>
 
-            <form class="form-horizontal p-t-20" action="{{ route('subcategory.create') }}" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal p-t-20" action="{{ route('subcategory.update') }}" method="POST" enctype="multipart/form-data">
                 <h2 class="text-center text-success fw-bold">{{ session('message') }}</h2>
                 @csrf
                 <div class="form-group row">
@@ -15,7 +15,9 @@
                       <select class="form-control" name="category_id">
                         <option value="" disabled selected> -- Select Category --</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}"
+                                {{ $category->id == $subCategory->category_id ? 'selected' : '' }}
+                                >{{ $category->name }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -25,14 +27,18 @@
                     <div class="col-sm-9">
                         <div class="input-group">
 
-                            <input type="text" class="form-control" name="name" id="exampleInputuname3" placeholder="sub category Name">
+                            <input type="text" class="form-control" name="name" id="exampleInputuname3" placeholder="sub category Name"
+                            value="{{ $subCategory->name }}"
+                            >
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="exampleInputEmail3" class="col-sm-3 control-label">Sub category Description</label>
                     <div class="col-sm-9">
-                        <textarea type="text" class="form-control" name="description" placeholder="category description"></textarea>
+                        <textarea type="text" class="form-control" name="description"
+                        {{$subCategory->name}}
+                        ></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -40,6 +46,8 @@
                     <div class="col-sm-9">
                         <div class="input-group">
                             <input type="file" id="input-file-now" name="image" class="dropify"/>
+                            <img src="{{ asset($subCategory->image) }}" alt="update-image" width="50px" height="50px">
+
                         </div>
                     </div>
                 </div>
@@ -47,10 +55,10 @@
                     <label for="inputPassword4" class="col-sm-3 control-label">Publication Status</label>
                     <div class="col-sm-9">
                         <label class="me-3">
-                            <input type="radio" name="status" value="1" class="me-1">Published
+                            <input type="radio" name="status" value="1" class="me-1" {{$subCategory->status == 1 ? 'checked' : ''  }}>Published
                         </label>
                         <label class="">
-                            <input type="radio" name="status" value="2" class="me-1">UnPublished
+                            <input type="radio" name="status" value="2" class="me-1"  {{$subCategory->status == 2 ? 'checked' : ''  }}>UnPublished
                         </label>
                     </div>
                 </div>

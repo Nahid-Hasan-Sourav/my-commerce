@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
-    use imageTraits;
+    // use imageTraits;
     public function index(){
         return view('admin.category.index');
     }
@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function store(Request $request){
         // return $request->file('category_image');
         Category::newCategory($request);
-
+        
         return back()->with('message','category info create successfully');
 
     }
@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
     public function edit ($id){
         $data = Category::find($id);
-        
+
         return view('admin.category.edit',compact('data'));
     }
 
@@ -48,7 +48,7 @@ class CategoryController extends Controller
             if(file_exists(public_path( $updateData->image)) && isset($updateData->image)){
                 File::delete(public_path($updateData->image));
             }
-            $updateData->image = $this->getImageUrl($request->file('category_image') ??  $updateData->image ,' upload/category-image/');
+            // $updateData->image = $this->getImageUrl($request->file('category_image') ??  $updateData->image ,' upload/category-image/');
         }
         $updateData->save();
 

@@ -31,4 +31,8 @@ class Category extends Model
         self::$category->image = self::geImageUrl($request);
         self::$category->save();
     }
+
+    public function subCategory(){
+        return $this->hasMany(Category::class,'category_id','id');
+    }
 }
