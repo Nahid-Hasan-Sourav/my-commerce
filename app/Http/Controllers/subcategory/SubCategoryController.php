@@ -76,9 +76,9 @@ class SubCategoryController extends Controller
 
     public function delete($id){
         $subCategory = SubCategory::find($id);
-        // if(file_exists($subCategory ->image)){
-        //     unlink($subCategory ->image);
-        // }
+        if(file_exists($subCategory ->image)){
+            unlink($subCategory ->image);
+        }
         $subCategory->delete();
 
         return redirect('/subcategory/manage')->with('message','delete successfull');

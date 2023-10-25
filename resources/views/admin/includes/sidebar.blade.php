@@ -36,11 +36,15 @@
 
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-email"></i><span class="hide-menu">Inbox</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Brand Module</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-email.html">Mailbox</a></li>
-                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                                <li><a href="app-compose.html">Compose Mail</a></li>
+                                <li>
+                                    <a href="{{ route('brand.add') }}">Add Brand </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('brand.manage') }}">Manage Brand</a>
+                                </li>
+
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-palette"></i><span class="hide-menu">Ui Elements <span class="text-white badge rounded-pill bg-primary ms-auto">25</span></span></a>
