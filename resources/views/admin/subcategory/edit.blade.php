@@ -6,7 +6,7 @@
         <div class="card-body">
             <h4 class="card-title">Edit Sub Category Form</h4>
 
-            <form class="form-horizontal p-t-20" action="{{ route('subcategory.update') }}" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal p-t-20" action="{{ route('subcategory.update',['id'=>$subCategory->id]) }}" method="POST" enctype="multipart/form-data">
                 <h2 class="text-center text-success fw-bold">{{ session('message') }}</h2>
                 @csrf
                 <div class="form-group row">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="form-group row m-b-0">
                     <div class="offset-sm-3 col-sm-9">
-                        <button type="submit" class="mt-4 text-white btn btn-success waves-effect waves-light">Create New Sub Category</button>
+                        <button type="submit" class="mt-4 text-white btn btn-success waves-effect waves-light">Update Sub Category</button>
                     </div>
                 </div>
             </form>

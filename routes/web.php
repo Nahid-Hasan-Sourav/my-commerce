@@ -47,7 +47,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::post('/subcategory/create',[SubCategoryController::class, 'create'])->name('subcategory.create');
     Route::get('/subcategory/manage',[SubCategoryController::class, 'manage'])->name('subcategory.manage');
     Route::get('/subcategory/edit/{id}',[SubCategoryController::class, 'edit'])->name('subcategory.edit');
-    Route::post('/subcategory/update/{id}',[SubCategoryController::class, 'edit'])->name('subcategory.update');
+    Route::post('/subcategory/update/{id}',[SubCategoryController::class, 'update'])->name('subcategory.update');
     Route::get('/subcategory/delete/{id}',[SubCategoryController::class, 'delete'])->name('subcategory.delete');
     //sub category end here
 

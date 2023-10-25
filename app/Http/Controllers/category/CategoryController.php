@@ -48,7 +48,7 @@ class CategoryController extends Controller
             if(file_exists(public_path( $updateData->image)) && isset($updateData->image)){
                 File::delete(public_path($updateData->image));
             }
-            // $updateData->image = $this->getImageUrl($request->file('category_image') ??  $updateData->image ,' upload/category-image/');
+            $updateData->image = $this->getImageUrl($request->file('category_image') ??  $updateData->image ,' upload/category-image/');
         }
         $updateData->save();
 
