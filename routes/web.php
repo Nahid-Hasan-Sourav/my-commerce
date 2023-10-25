@@ -7,6 +7,8 @@ use App\Http\Controllers\category\CategoryController;
 use App\Http\Controllers\subcategory\SubCategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UnitController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,6 +61,15 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/brand/edit/{id}',      [BrandController::class,'edit'])    ->name('brand.edit');
     Route::post('/brand/update/{id}',   [BrandController::class,'update'])  ->name('brand.update');
     Route::get('/brand/delete/{id}',    [BrandController::class,'delete'])  ->name('brand.delete');
+    //brand module end here 
+    
+    //brand module start here
+    Route::get('/unit/add',            [UnitController::class,'index'])   ->name('unit.add');
+    Route::post('/unit/create',        [UnitController::class,'create'])  ->name('unit.create');
+    Route::get('/unit/manage',         [UnitController::class,'manage'])  ->name('unit.manage');
+    Route::get('/unit/edit/{id}',      [UnitController::class,'edit'])    ->name('unit.edit');
+    Route::post('/unit/update/{id}',   [UnitController::class,'update'])  ->name('unit.update');
+    Route::get('/unit/delete/{id}',    [UnitController::class,'delete'])  ->name('unit.delete');
     //brand module end here 
 
 
