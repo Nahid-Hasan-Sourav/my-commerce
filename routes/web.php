@@ -8,6 +8,7 @@ use App\Http\Controllers\subcategory\SubCategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\ProductController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +72,17 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::post('/unit/update/{id}',   [UnitController::class,'update'])  ->name('unit.update');
     Route::get('/unit/delete/{id}',    [UnitController::class,'delete'])  ->name('unit.delete');
     //brand module end here 
+
+
+     //product module start here
+     Route::get('/product/add',                     [ProductController::class,'index'])   ->name('product.add');
+     Route::post('/product/create',                 [ProductController::class,'create'])  ->name('product.create');
+     Route::get('/product/manage',                  [ProductController::class,'manage'])  ->name('product.manage');
+     Route::get('/product/edit/{id}',               [ProductController::class,'edit'])    ->name('product.edit');
+     Route::post('/product/update/{id}',            [ProductController::class,'update'])  ->name('product.update');
+     Route::get('/product/delete/{id}',             [ProductController::class,'delete'])  ->name('product.delete');
+     Route::get('/product/category/select/{id}',    [ProductController::class,'getSubCategoryByCategory'])  ->name('product.delete');
+     //product module end here 
 
 
 });

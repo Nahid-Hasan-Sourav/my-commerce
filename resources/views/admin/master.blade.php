@@ -33,6 +33,7 @@
         <!-- this is for sweet alert -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9">
 <link href="{{ asset('/') }}admin/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ asset('/') }}admin/assets/node_modules/summernote/dist/summernote-bs4.css">
 
 
         {{-- end manage category table css --}}
@@ -146,7 +147,37 @@
 <script src="{{asset('/')}}admin/assets/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="{{asset('/')}}admin/assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
 
-{{-- <script>
+{{-- custom js product --}}
+<script src="{{asset('/')}}admin/assets/custom_js/product.js"></script>
+
+{{-- this is for text editor summernote --}}
+<script src="{{asset('/')}}admin/assets/node_modules/summernote/dist/summernote-bs4.min.js"></script>
+<script>
+    $(function() {
+
+        $('.summernote').summernote({
+            height: 350, // set editor height
+            minHeight: null, // set minimum height of editor
+            maxHeight: null, // set maximum height of editor
+            focus: false // set focus to editable area after initializing summernote
+        });
+
+        $('.inline-editor').summernote({
+            airMode: true
+        });
+
+    });
+
+    window.edit = function() {
+            $(".click2edit").summernote()
+        },
+        window.save = function() {
+            $(".click2edit").summernote('destroy');
+        }
+    </script>
+    {{-- end summernote --}}
+
+<script>
     $(document).ready(function() {
         // Basic
         $('.dropify').dropify();
@@ -187,7 +218,7 @@
             }
         })
     });
-    </script> --}}
+    </script>
 
 
 <script>

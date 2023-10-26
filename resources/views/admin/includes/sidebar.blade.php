@@ -47,7 +47,7 @@
 
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Brand Module</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Unit Module</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li>
                                     <a href="{{ route('unit.add') }}">Add Unit </a>
@@ -58,10 +58,21 @@
 
                             </ul>
                         </li>
-                        <li class="nav-small-cap">--- SUPPORT</li>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Product Module</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li>
+                                    <a href="{{ route('product.add') }}">Add Product </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('product.manage') }}">Manage Product</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        {{-- <li class="nav-small-cap">--- SUPPORT</li>
                         <li> <a class="waves-effect waves-dark" href="http://eliteadmin.themedesigner.in/demos/bt4/documentation/documentation.html" aria-expanded="false"><i class="far fa-circle text-danger"></i><span class="hide-menu">Documentation</span></a></li>
                         <li> <a class="waves-effect waves-dark" href="pages-login.html" aria-expanded="false"><i class="far fa-circle text-success"></i><span class="hide-menu">Log Out</span></a></li>
-                        <li> <a class="waves-effect waves-dark" href="pages-faq.html" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">FAQs</span></a></li>
+                        <li> <a class="waves-effect waves-dark" href="pages-faq.html" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">FAQs</span></a></li> --}}
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
