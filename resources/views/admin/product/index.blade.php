@@ -20,13 +20,13 @@
                       </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="exampleInputuname3" class="col-sm-3 control-label">Sub Category Name</label>
                     <div class="col-sm-9">
                       <select class="form-control" name="sub_category_id" id="sub_category_id">
                         <option value="" disabled selected> -- Select Sub Category --</option>
-                     
+
                       </select>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                       </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="exampleInputuname3" class="col-sm-3 control-label">Product Name*</label>
                     <div class="col-sm-9">
@@ -90,7 +90,7 @@
                     <div class="col-sm-9">
                         <div class="input-group">
 
-                            <input type="text" class="form-control" name="product_code" id="exampleInputuname3" placeholder="Product Stock Amount">
+                            <input type="number" class="form-control" name="stock_amount" id="exampleInputuname3" placeholder="Product Stock Amount">
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="exampleInputEmail3" class="col-sm-3 control-label">Short Description</label>
                     <div class="col-sm-9">
@@ -119,15 +119,25 @@
                         <textarea type="text" class="form-control summernote" name="long_description" placeholder="Long description"></textarea>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label class="form-label col-sm-3 control-label" for="web">Featured Image</label>
                     <div class="col-sm-9">
                         <div class="input-group">
-                            <input type="file" id="input-file-now" name="Product_image" class="dropify"/>
+                            <input type="file" id="input-file-now" name="product_image" class="dropify"/>
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label class="form-label col-sm-3 control-label" for="web">Other Images</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input type="file" id="input-file-now" name="other_image[]" accept="image/*" multiple name="Product_image" class="dropify"/>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group row">
                     <label for="inputPassword4" class="col-sm-3 control-label">Publication Status</label>
                     <div class="col-sm-9">

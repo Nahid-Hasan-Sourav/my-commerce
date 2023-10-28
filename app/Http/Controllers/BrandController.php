@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 
 class BrandController extends Controller
 {
-    use imageTraits;
+    // use imageTraits;
     public function index(){
         return view('admin.brand.index');
     }
@@ -26,7 +26,7 @@ class BrandController extends Controller
         $brand->name        = $request->name;
         $brand->description = $request->description;
         $brand->status      = $request->status;
-        $brand->image       = $this->getImageUrl($request->file('image') ?? null, 'upload/brand/');
+        // $brand->image       = $this->getImageUrl($request->file('image') ?? null, 'upload/brand/');
         $brand->save();
 
         return redirect()->route('brand.manage')->with('message','Brand added successfull');
@@ -46,13 +46,13 @@ class BrandController extends Controller
         $brand->description = $request->description;
         $brand->status      = $request->status;
 
-        if($request->hasFile('image')){
-            if(file_exists(public_path($brand->image)) && isset( $brand->image)){
-                File::delete(public_path($brand->image));
-            }
+        // if($request->hasFile('image')){
+        //     if(file_exists(public_path($brand->image)) && isset( $brand->image)){
+        //         File::delete(public_path($brand->image));
+        //     }
 
-            $brand->image = $this->getImageUrl($request->file('image') ?? $brand->image, 'upload/brand/');  
-        }
+        //     $brand->image = $this->getImageUrl($request->file('image') ?? $brand->image, 'upload/brand/');
+        // }
         $brand->save();
 
         return redirect()->route('brand.manage')->with('message','Brand Update Successfull');
@@ -62,9 +62,9 @@ class BrandController extends Controller
 
     public function delete($id){
         $data = Brand::find($id);
-        if(file_exists($data->image)){
-            unlink($data->image);
-        }
+        // if(file_exists($data->image)){
+        //     unlink($data->image);
+        // }
         $data->delete();
 
         return redirect()->route('brand.manage')->with('message','Brand Delete successfull');

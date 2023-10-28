@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function store(Request $request){
         // return $request->file('category_image');
         Category::newCategory($request);
-        
+
         return back()->with('message','category info create successfully');
 
     }
@@ -44,12 +44,12 @@ class CategoryController extends Controller
         $updateData->description = $request->description;
         $updateData->status = $request->status;
 
-        if($request->hasFile('category_image')){
-            if(file_exists(public_path( $updateData->image)) && isset($updateData->image)){
-                File::delete(public_path($updateData->image));
-            }
-            $updateData->image = $this->getImageUrl($request->file('category_image') ??  $updateData->image ,' upload/category-image/');
-        }
+        // if($request->hasFile('category_image')){
+        //     if(file_exists(public_path( $updateData->image)) && isset($updateData->image)){
+        //         File::delete(public_path($updateData->image));
+        //     }
+        //     $updateData->image = $this->getImageUrl($request->file('category_image') ??  $updateData->image ,' upload/category-image/');
+        // }
         $updateData->save();
 
         // if($data){
@@ -59,9 +59,9 @@ class CategoryController extends Controller
 
     public function delete($id){
         $exitData = Category::find($id);
-        if(file_exists($exitData->image)){
-            unlink($exitData->image);
-        }
+        // if(file_exists($exitData->image)){
+        //     unlink($exitData->image);
+        // }
         $exitData->delete();
         return redirect('/category/manage')->with('message','Category Info Delete Successfully');
     }
