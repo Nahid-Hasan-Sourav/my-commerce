@@ -23,6 +23,10 @@
     <link href="{{asset('/')}}admin/dist/css/pages/dashboard1.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('/')}}admin/assets/node_modules/dropify/dist/css/dropify.min.css">
+    {{-- this is for font awesome cdn --}}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  {{-- end font awesome cdn --}}
 
     {{-- this is for manage category table css --}}
     <link rel="stylesheet" type="text/css"

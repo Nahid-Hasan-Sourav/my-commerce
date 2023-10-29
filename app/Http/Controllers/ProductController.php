@@ -79,4 +79,33 @@ class ProductController extends Controller
         ],200);
 
     }
+
+    public function manage(){
+        $products = Product::with([
+            'category',
+            'subCategory',
+            'otherImage',
+            'brand',
+            'unit',
+
+
+            ])->get();
+        // return response()->json([
+        //     "data"=> $products,
+        // ]);
+        return view('admin.product.manage',compact('products'));
+    }
+    public function details($id){
+        $product = Product::with([
+            'category',
+            'subCategory',
+            'otherImage',
+            'brand',
+            'unit',
+
+
+            ])->find($id);
+
+            return view('admin.product.details',compact('product'));
+    }
 }
