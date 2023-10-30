@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -107,5 +108,66 @@ class ProductController extends Controller
             ])->find($id);
 
             return view('admin.product.details',compact('product'));
+    }
+
+    public function edit($id){
+        $product          = Product::find($id);
+        $categories       = Category::all();
+        $subCategories    = SubCategory::where('category_id',$product->category_id)->get();
+        $brands           = Brand::all();
+        $units            = Unit::all();
+
+        return view('admin.product.edit',compact('product','categories','subCategories','brands','units'));
+
+    }
+    
+    public function update(Request $request,$id){
+        $update                         = Product::find($id);
+        $update->name                   = $request->product_name;
+        $update->category_id            = $request->category_id;
+        $update->sub_category_id        = $request->sub_category_id;
+        $update->brand_id               = $request->brand_id;
+        $update->code                   = $request->product_code;
+        $update->model                  = $request->product_model;
+        $update->stock_amount           = $request->stock_amount;
+        $update->regular_price          = $request->regular_price;
+        $update->selling_price          = $request->selling_price;
+        $update->short_description      = $request->short_description;
+        $update->long_description       = $request->long_description;
+        $update->status                 = $request->status;
+        
+        if($request->hasFile('product_image')){
+            if(file_exits(public_path($update->image)) && isset($update->image)){
+                File::delete(public_path($update->image));
+            }                   
+            $update->image = $this->getImageUrl($request->file('product_image') ??  null ,' upload/product-image/');
+        }
+
+
+        if($request->file('other_image')){
+            $otherImages = OtherImage::where('product_id',$id)->get();
+            foreach( $otherImages as $image){
+                if(file_exits(public_path($image->image)) && isset($image->image)){
+                    File::delete(public_path($image->image));
+                }  
+            }
+            // Handle multiple images
+        $otherImageFiles = $request->file('other_image');
+
+        foreach ($otherImageFiles as $file) {
+            $otherImage = new OtherImage();
+            $otherImage->product_id =  $update->id;
+            $otherImage->image      = $this->getImageUrl($file, 'upload/other/images/');
+            $otherImage->save();
+            // $otherImages[] = $this->getImageUrl($file, 'upload/other/images/');
+        }
+
+    }
+    $update->save();
+
+    return redirect('/product/manage')->with('message','Product Update Successfull');
+        
+      
+
     }
 }

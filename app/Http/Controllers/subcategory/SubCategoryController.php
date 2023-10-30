@@ -28,7 +28,7 @@ class SubCategoryController extends Controller
         $subCategory->category_id = $request->category_id;
         $subCategory->description = $request->description;
         $subCategory->status      = $request->status;
-        // $subCategory->image       = $this->getImageUrl($request->file('image') ??  null ,' upload/sub-category-image/');
+        $subCategory->image       = $this->getImageUrl($request->file('image') ??  null ,' upload/sub-category-image/');
         $subCategory->save();
 
         if($subCategory){
@@ -62,12 +62,12 @@ class SubCategoryController extends Controller
         $subCategory->category_id   = $request->category_id;
         $subCategory->description   = $request->description;
         $subCategory->status        = $request->status;
-        // if($request->hasFile('image')){
-        //     if(file_exists(public_path($subCategory->image)) && isset($subCategory->image)){
-        //         File::delete(public_path( $subCategory->image));
-        //     }
-        //     $subCategory->image = $this->getImageUrl($request->file('image') ??   $subCategory->image ,' upload/category-image/');
-        // }
+        if($request->hasFile('image')){
+            if(file_exists(public_path($subCategory->image)) && isset($subCategory->image)){
+                File::delete(public_path( $subCategory->image));
+            }
+            $subCategory->image = $this->getImageUrl($request->file('image') ??   $subCategory->image ,' upload/category-image/');
+        }
         $subCategory->save();
 
         return redirect('/subcategory/manage')->with('message','Sub-Category Update Successfull');
@@ -76,9 +76,9 @@ class SubCategoryController extends Controller
 
     public function delete($id){
         $subCategory = SubCategory::find($id);
-        // if(file_exists($subCategory ->image)){
-        //     unlink($subCategory ->image);
-        // }
+        if(file_exists($subCategory ->image)){
+            unlink($subCategory ->image);
+        }
         $subCategory->delete();
 
         return redirect('/subcategory/manage')->with('message','delete successfull');

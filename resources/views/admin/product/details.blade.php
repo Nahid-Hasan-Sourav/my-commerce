@@ -68,7 +68,7 @@
                                      <tr>
                                         <th>Featured Image</th>
                                         <td>
-                                            <img src="{{asset($product->image) }}"/>
+                                            <img src="{{asset($product->image) }}" width="200" height="100"/>
                                         </td>
                                      </tr>
                                      <tr>
