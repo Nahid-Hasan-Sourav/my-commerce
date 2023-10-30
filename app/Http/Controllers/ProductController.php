@@ -136,20 +136,28 @@ class ProductController extends Controller
         $update->long_description       = $request->long_description;
         $update->status                 = $request->status;
         
-        if($request->hasFile('product_image')){
-            if(file_exits(public_path($update->image)) && isset($update->image)){
+        // if($request->hasFile('product_image')){
+        //     if(file_exits(public_path($update->image)) && isset($update->image)){
+        //         File::delete(public_path($update->image));
+        //     }                   
+        //     $update->image = $this->getImageUrl($request->file('product_image') ??  null ,' upload/product-image/');
+        // }
+        if ($request->hasFile('product_image')) {
+            if (file_exists(public_path($update->image)) && isset($update->image)) {
                 File::delete(public_path($update->image));
-            }                   
-            $update->image = $this->getImageUrl($request->file('product_image') ??  null ,' upload/product-image/');
+            }
+        
+            $update->image = $this->getImageUrl($request->file('product_image') ?? null, 'upload/product-image/');
         }
 
 
         if($request->file('other_image')){
             $otherImages = OtherImage::where('product_id',$id)->get();
             foreach( $otherImages as $image){
-                if(file_exits(public_path($image->image)) && isset($image->image)){
+                if(file_exists(public_path($image->image)) && isset($image->image)){
                     File::delete(public_path($image->image));
-                }  
+                }        
+                 
             }
             // Handle multiple images
         $otherImageFiles = $request->file('other_image');
@@ -169,5 +177,22 @@ class ProductController extends Controller
         
       
 
+    }
+
+    public function delete($id){
+        $product = Product::find($id);
+        if(file_exists($product->image)){
+            unlink($product->image);
+        }
+        $otherImage = OtherImage::where('product_id',$id)->get();
+        foreach( $otherImage as $image){
+            if(file_exists($image->image)){
+                unlink($image->image);
+            }
+            $image->delete();
+        }
+
+        $product->delete();
+        return redirect('/product/manage')->with('message','Product Delete Successfull');
     }
 }

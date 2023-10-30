@@ -59,9 +59,9 @@ class CategoryController extends Controller
 
     public function delete($id){
         $exitData = Category::find($id);
-        // if(file_exists($exitData->image)){
-        //     unlink($exitData->image);
-        // }
+        if(file_exists($exitData->image)){
+            unlink($exitData->image);
+        }
         $exitData->delete();
         return redirect('/category/manage')->with('message','Category Info Delete Successfully');
     }
