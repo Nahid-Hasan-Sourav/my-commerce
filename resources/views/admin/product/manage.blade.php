@@ -15,7 +15,8 @@
                                     <tr>
                                         <th>SL NO</th>
                                         <th>Product Name</th>
-                                        <th>Code</th>
+                                        <th>Category Name</th>
+                                        <th>Sub Category Name</th>
                                         <th>Image</th>
                                         <th>Publication Status</th>
                                         <th>Action</th>
@@ -27,7 +28,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name }}</td>
-                                        <td>{{ $product->short_description }}</td>
+                                        <td>{{ $product->category->name }}</td>
+                                        <td>{{ $product->subCategory->name }}</td>
                                         <td>
                                             <img src="{{ asset($product->image) }}" alt="img" width="50px" height="50px">
                                         </td>

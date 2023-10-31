@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 
 class SubCategoryController extends Controller
 {
-    // use imageTraits;
+    use imageTraits;
     public function index(){
         return view('admin.subcategory.index',['categories'=>Category::all()]);
     }

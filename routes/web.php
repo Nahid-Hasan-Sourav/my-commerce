@@ -23,11 +23,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[MyCommerceController::class,'index'])                       ->name('home');
-Route::get('/product-category',[MyCommerceController::class,'category'])    ->name('product-category');
-Route::get('/product-detail',[MyCommerceController::class,'detail'])        ->name('product-detail');
-Route::get('/show-cart',[CartController::class,'index'])                    ->name('show-cart');
-Route::get('/checkout',[CheckoutController::class,'index'])                 ->name('checkout');
+Route::get('/',[MyCommerceController::class,'index'])                            ->name('home');
+Route::get('/product-category/{id}',[MyCommerceController::class,'category'])    ->name('product.category');
+Route::get('/product-detail',[MyCommerceController::class,'detail'])             ->name('product-detail');
+Route::get('/show-cart',[CartController::class,'index'])                         ->name('show-cart');
+Route::get('/checkout',[CheckoutController::class,'index'])                      ->name('checkout');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
 
