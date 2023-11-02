@@ -47,42 +47,11 @@ Product Detail
                 <div class="col-lg-6 col-md-12 col-12">
                     <div class="product-info">
                         <h2 class="title">{{ $productDetails->name }}</h2>
-                        <p class="category"><i class="lni lni-tag"></i> {{ $productDetails->category->name }}:<a href="javascript:void(0)">{{ $productDetails->subCategory->name }}
+                        <p class="category"><i class="lni lni-tag"></i> {{ $productDetails->category->name }}:<a>{{ $productDetails->subCategory->name }}
                                 cameras</a></p>
                         <h3 class="price">${{ $productDetails->selling_price }}<span>${{ $productDetails->regular_price }}</span></h3>
                         <p class="info-text">{{$productDetails->short_description}}</p>
                         <div class="row">
-                            {{-- <div class="col-lg-4 col-md-4 col-12">
-                                <div class="form-group color-option">
-                                    <label class="title-label" for="size">Choose color</label>
-                                    <div class="single-checkbox checkbox-style-1">
-                                        <input type="checkbox" id="checkbox-1" checked>
-                                        <label for="checkbox-1"><span></span></label>
-                                    </div>
-                                    <div class="single-checkbox checkbox-style-2">
-                                        <input type="checkbox" id="checkbox-2">
-                                        <label for="checkbox-2"><span></span></label>
-                                    </div>
-                                    <div class="single-checkbox checkbox-style-3">
-                                        <input type="checkbox" id="checkbox-3">
-                                        <label for="checkbox-3"><span></span></label>
-                                    </div>
-                                    <div class="single-checkbox checkbox-style-4">
-                                        <input type="checkbox" id="checkbox-4">
-                                        <label for="checkbox-4"><span></span></label>
-                                    </div>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="col-lg-4 col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="color">Battery capacity</label>
-                                    <select class="form-control" id="color">
-                                        <option>5100 mAh</option>
-                                        <option>6200 mAh</option>
-                                        <option>8000 mAh</option>
-                                    </select>
-                                </div>
-                            </div> --}}
                             <div class="row">
                                <div class="col-12">
                                    <div class="form-group quantity">
@@ -92,10 +61,13 @@ Product Detail
                             </div>
                         </div>
                         <div class="bottom-content">
-                            <div class="row align-items-end">
+                            <div class="row ">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="button cart-button">
-                                        <a href="{{ route('show-cart')}}" class="btn btn-md" style="width:100%;">Add to Cart</button>
+                                        <button  class="btn btn-md" style="width:100%;"  id="add-to-card-button">
+                                           
+                                             Add to Cart        
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
@@ -330,6 +302,11 @@ Product Detail
         </div>
     </div>
 </div>
-
+<script>
+    document.getElementById('add-to-card-button').addEventListener('click', function() {
+        // Redirect the user to the "show-cart" route
+        window.location.href = "{{ route('show-cart') }}";
+    });
+</script>
 @endsection
 
