@@ -9,4 +9,7 @@ class CartController extends Controller
     public function index(){
         return view('website.cart.index');
     }
+    public function addToCart($id){
+        dd($id);
+    }
 }

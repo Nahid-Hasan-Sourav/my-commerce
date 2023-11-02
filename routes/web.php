@@ -27,6 +27,7 @@ Route::get('/',[MyCommerceController::class,'index'])                           
 Route::get('/product-category/{id}',[MyCommerceController::class,'category'])                    ->name('product.category');
 Route::get('/product-detail',[MyCommerceController::class,'detail'])                             ->name('product.detail');
 Route::get('/single-product-detail/{id}',[MyCommerceController::class,'singleProductDetails'])   ->name('product.singleDetails');
+Route::post('/add-to-cart/{id}',[CartController::class,'addToCart'])                             ->name('addtocart');
 Route::get('/show-cart',[CartController::class,'index'])                                         ->name('show-cart');
 Route::get('/checkout',[CheckoutController::class,'index'])                                      ->name('checkout');
 

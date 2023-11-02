@@ -51,11 +51,13 @@ Product Detail
                                 cameras</a></p>
                         <h3 class="price">${{ $productDetails->selling_price }}<span>${{ $productDetails->regular_price }}</span></h3>
                         <p class="info-text">{{$productDetails->short_description}}</p>
+                       <form action="{{ route('addtocart',['id'=>$productDetails->id]) }}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="row">
                                <div class="col-12">
                                    <div class="form-group quantity">
-                                    <input type="number" class="form-control" value="1" min="1" placeholder="product quantity"/>
+                                    <input type="number" name="qty" class="form-control" value="1" min="1" placeholder="product quantity"/>
                                    </div>
                                </div>
                             </div>
@@ -64,8 +66,7 @@ Product Detail
                             <div class="row ">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="button cart-button">
-                                        <button  class="btn btn-md" style="width:100%;"  id="add-to-card-button">
-                                           
+                                        <button type="submit" class="btn btn-md" style="width:100%;">
                                              Add to Cart        
                                         </button>
                                     </div>
@@ -82,6 +83,7 @@ Product Detail
                                 </div>
                             </div>
                         </div>
+                       </form>
                     </div>
                 </div>
             </div>
