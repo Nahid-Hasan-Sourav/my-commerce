@@ -170,6 +170,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        // laravel shopping cart start here
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
+        // laravel shopping cart end here
     ])->toArray(),
 
     /*
@@ -185,6 +188,11 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+
+         // laravel shopping cart start here
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+        // laravel shopping cart end here 
+        
     ])->toArray(),
 
 ];

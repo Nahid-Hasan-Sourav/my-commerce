@@ -1,3 +1,6 @@
+{{-- swal alert start here --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+{{-- swal alert end here --}}
 <script src="{{asset('/')}}website/assets/js/bootstrap.min.js"></script>
 <script src="{{asset('/')}}website/assets/js/tiny-slider.js"></script>
 <script src="{{asset('/')}}website/assets/js/glightbox.min.js"></script>

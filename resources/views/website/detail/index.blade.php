@@ -51,23 +51,34 @@ Product Detail
                                 cameras</a></p>
                         <h3 class="price">${{ $productDetails->selling_price }}<span>${{ $productDetails->regular_price }}</span></h3>
                         <p class="info-text">{{$productDetails->short_description}}</p>
-                       <form action="{{ route('addtocart',['id'=>$productDetails->id]) }}" method="POST">
-                        @csrf
+                        {{-- <form action="{{ route('addtocart',['id'=>$productDetails->id]) }}" method="POST">
+                        @csrf --}}
                         <div class="row">
                             <div class="row">
-                               <div class="col-12">
-                                   <div class="form-group quantity">
-                                    <input type="number" name="qty" class="form-control" value="1" min="1" placeholder="product quantity"/>
-                                   </div>
-                               </div>
+                                <div class="col-12">
+                                    <div class="form-group quantity">
+                                        {{-- <input type="number" name="qty" id="qty" class="form-control" value="1"  placeholder="" style="width:40px"/> --}}
+                                        <p name="qty" id="qty" class="form-control" placeholder="" style="width:40px">
+                                            1
+                                        </p>
+                                        <div class="flex-col mt-2 d-flex">
+                                            <button class="btn-sm me-2" id="quantity-increase">
+                                                +
+                                            </button>
+                                            <button class="btn-sm " id="quantity-decrease">
+                                                -
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="bottom-content">
                             <div class="row ">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="button cart-button">
-                                        <button type="submit" class="btn btn-md" style="width:100%;">
-                                             Add to Cart        
+                                        <button type="submit" class="btn btn-md" style="width:100%;" id="add-to-cart-btn" value="{{$productDetails->id}}">
+                                            Add to Cart
                                         </button>
                                     </div>
                                 </div>
@@ -83,7 +94,7 @@ Product Detail
                                 </div>
                             </div>
                         </div>
-                       </form>
+                        {{-- </form> --}}
                     </div>
                 </div>
             </div>
@@ -133,7 +144,7 @@ Product Detail
                         <ul>
                             <li>
                                 <span>5 stars - 38</span>
-                                <i class="lni lni-star-filled"></i>           
+                                <i class="lni lni-star-filled"></i>
                                 <i class="lni lni-star-filled"></i>
                                 <i class="lni lni-star-filled"></i>
                                 <i class="lni lni-star-filled"></i>
@@ -305,10 +316,79 @@ Product Detail
     </div>
 </div>
 <script>
-    document.getElementById('add-to-card-button').addEventListener('click', function() {
-        // Redirect the user to the "show-cart" route
-        window.location.href = "{{ route('show-cart') }}";
+    // document.getElementById('add-to-card-button').addEventListener('click', function() {
+    //     // Redirect the user to the "show-cart" route
+    //     window.location.href = "{{ route('show-cart') }}";
+    // });
+    // $(document).ready(function(){
+
+    $("#quantity-increase").click(function() {
+        let quantity = parseInt(jQuery("#qty").text());
+        jQuery("#qty").text(quantity + 1);
+    })
+    $("#quantity-decrease").click(function() {
+        let quantity = parseInt($("#qty").text().trim());
+
+        if (quantity > 1) {
+            // Decrease the quantity by 1
+            $("#qty").text(quantity - 1);
+        } else {
+            // If quantity is already 1 or less, set it to 1
+            $("#qty").text(1);
+        }
     });
+
+    $("#add-to-cart-btn").click(function() {
+        let id = jQuery(this).val();
+        let qty = jQuery("#qty").text();
+        console.log("Quantity ", qty);
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            , }
+        , });
+
+        $.ajax({
+            url: "/add-to-cart/" + id
+            , type: "POST",
+
+            data: {
+                qty
+            },
+            // contentType: false, // Set contentType to false for file uploads
+            // processData: false, // Set processData to false for file uploads
+            success: function(response) {
+
+                if (response.status == "200") {
+
+
+                    Swal.fire({
+                        icon: 'success'
+                        , title: response.message,
+                        // text: response.message,
+                        timer: 5000, // Set the timer to 3000 milliseconds (3 seconds)
+                        showConfirmButton: true // Hide the "OK" button
+                    }).then(() => {
+                        // After the timer expires, reload the page
+                        // window.location.reload();
+                    });
+                }
+
+                console.log("Id", response);
+
+
+            }
+            , error: function(xhr, status, error) {
+                console.log("Error: ", error);
+                var response = JSON.parse(xhr.responseText);
+                console.log("Error Message: ", response.message);
+            }
+        , });
+
+    });
+
+
+    // });
+
 </script>
 @endsection
-
