@@ -15,21 +15,20 @@ class CartController extends Controller
     {
 
         $product = Product::find($id);
-
-        // if(!$product){
+      
         $itemData = [
             'id' => $product->id,
             'name' => $product->name,
             'qty' => $request->qty,
             'price' => $product->selling_price,
             'options' => [
+                'image'  =>$product->image,
                 'regular_price' => $product->regular_price,
-                'sub_category_name' => $product->subCategory->sub_category_name,
+                'sub_category_name' => $product->subCategory->name,
                 // Add more options as needed
             ],
         ];
         Cart::add($itemData);
-        $data = Cart::get($id);
      
         return response()->json([
             "status" => "200",
@@ -41,7 +40,9 @@ class CartController extends Controller
 
     public function showCart()
     {
-        return view('website.cart.index');
+        $datas = Cart::content();
+        // dd($datas);
+        return view('website.cart.index',compact('datas'));
     }
 
 }

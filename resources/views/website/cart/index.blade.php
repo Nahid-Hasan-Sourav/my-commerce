@@ -52,15 +52,15 @@ Shoping Cart Page
                 </div>
             </div>
 
-
-            <div class="cart-single-list">
+            @foreach ($datas as $data)
+               <div class="cart-single-list">
                 <div class="row align-items-center">
                     <div class="col-lg-1 col-md-1 col-12">
-                        <a href="product-details.html"><img src="{{asset('/')}}website/assets/images/cart/01.jpg" alt="#"></a>
+                        <a href=""><img src="{{asset($data->image)}}" alt=""></a>
                     </div>
                     <div class="col-lg-4 col-md-3 col-12">
-                        <h5 class="product-name"><a href="product-details.html">
-                                Canon EOS M50 Mirrorless Camera</a></h5>
+                        <h5 class="product-name"><a href="">
+                                {{ $data->name }}</a></h5>
                         <p class="product-des">
                             <span><em>Type:</em> Mirrorless</span>
                             <span><em>Color:</em> Black</span>
@@ -87,10 +87,12 @@ Shoping Cart Page
                         <a class="remove-item" href="javascript:void(0)"><i class="lni lni-close"></i></a>
                     </div>
                 </div>
-            </div>
+            </div> 
+            @endforeach
+            
 
 
-            <div class="cart-single-list">
+            {{-- <div class="cart-single-list">
                 <div class="row align-items-center">
                     <div class="col-lg-1 col-md-1 col-12">
                         <a href="product-details.html"><img src="{{asset('/')}}website/assets/images/cart/02.jpg" alt="#"></a>
@@ -160,7 +162,7 @@ Shoping Cart Page
                         <a class="remove-item" href="javascript:void(0)"><i class="lni lni-close"></i></a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
         <div class="row">

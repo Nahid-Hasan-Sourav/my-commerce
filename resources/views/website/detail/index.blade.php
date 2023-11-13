@@ -370,7 +370,7 @@ Product Detail
                         showConfirmButton: true // Hide the "OK" button
                     }).then(() => {
                         // After the timer expires, reload the page
-                        // window.location.reload();
+                        window.location.href = "{{ route('show-cart') }}";
                     });
                 }
 
