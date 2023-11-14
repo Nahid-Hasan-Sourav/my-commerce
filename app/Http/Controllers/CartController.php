@@ -18,17 +18,16 @@ class CartController extends Controller
          $allCart = Cart::content();
          $allCartArray = $allCart->values()->all();
 
-        //  for($i=0;$i<count($allCart);$i++){
-        //     $data=$allCart[$i];
-            return response()->json([
-                "data"=>   $allCartArray,
-                "status" => "200",
-                "message" => "The product added successfully ",
-            ]);
-        //  }
-         
-         
-        $itemData = [
+         foreach( $allCartArray as $data){
+          if($data->id == $id){
+            $updateData = Cart::update($data->rowId,['qty' => $data->qty+1]);
+             return response()->json([
+            "status" => "200",
+            "message" => "The productalready exit successfully ",
+        ]);
+          }
+          else{
+             $itemData = [
             'id'                => $product->id,
             'name'              => $product->name,
             'qty'               => $request->qty,
@@ -46,6 +45,27 @@ class CartController extends Controller
             "status" => "200",
             "message" => "The product added successfully ",
         ]);
+          }
+         }
+        
+        // $itemData = [
+        //     'id'                => $product->id,
+        //     'name'              => $product->name,
+        //     'qty'               => $request->qty,
+        //     'price'             => $product->selling_price,
+        //     'options' => [
+        //         'image'             => $product->image,
+        //         'regular_price'     => $product->regular_price,
+        //         'sub_category_name' => $product->subCategory->name,
+        //         'category_name'     => $product->category->name
+        //     ],
+        // ];
+        // Cart::add($itemData);
+     
+        // return response()->json([
+        //     "status" => "200",
+        //     "message" => "The product added successfully ",
+        // ]);
       
 
     }
