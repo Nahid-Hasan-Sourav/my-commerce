@@ -349,32 +349,31 @@ Product Detail
         , });
 
         $.ajax({
-            url: "/add-to-cart/" + id
-            , type: "POST",
+            url: "/add-to-cart/" + id,
+            type: "POST",
 
             data: {
                 qty
             },
-            // contentType: false, // Set contentType to false for file uploads
-            // processData: false, // Set processData to false for file uploads
+     
             success: function(response) {
 
                 if (response.status == "200") {
+                    console.log("all cart data",response.data);
 
-
-                    Swal.fire({
-                        icon: 'success'
-                        , title: response.message,
-                        // text: response.message,
-                        timer: 5000, // Set the timer to 3000 milliseconds (3 seconds)
-                        showConfirmButton: true // Hide the "OK" button
-                    }).then(() => {
-                        // After the timer expires, reload the page
-                        window.location.href = "{{ route('show-cart') }}";
-                    });
+                    // Swal.fire({
+                    //     icon: 'success'
+                    //     , title: response.message,
+                    //     // text: response.message,
+                    //     timer: 5000, // Set the timer to 3000 milliseconds (3 seconds)
+                    //     showConfirmButton: true // Hide the "OK" button
+                    // }).then(() => {
+                    //     // After the timer expires, reload the page
+                    //     window.location.href = "{{ route('show-cart') }}";
+                    // });
                 }
 
-                console.log("Id", response);
+                // console.log("Id", response);
 
 
             }

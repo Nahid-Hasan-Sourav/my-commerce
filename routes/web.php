@@ -28,6 +28,8 @@ Route::get('/product-category/{id}',[MyCommerceController::class,'category'])   
 Route::get('/product-detail',[MyCommerceController::class,'detail'])                             ->name('product.detail');
 Route::get('/single-product-detail/{id}',[MyCommerceController::class,'singleProductDetails'])   ->name('product.singleDetails');
 Route::post('/add-to-cart/{id}',[CartController::class,'addToCart'])                             ->name('addtocart');
+Route::post('/increase-update-quantity/{id}',[CartController::class,'increaseUpdateQuantity'])                   ->name('update.quantity');
+Route::post('/decrease-update-quantity/{id}',[CartController::class,'decreaseUpdateQuantity'])                   ->name('update.quantity');
 Route::get('/show-cart',[CartController::class,'showCart'])                                      ->name('show-cart');
 Route::get('/checkout',[CheckoutController::class,'index'])                                      ->name('checkout');
 

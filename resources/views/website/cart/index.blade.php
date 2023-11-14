@@ -57,7 +57,7 @@ Shoping Cart Page
 
            
             @foreach ($datas as $data)
-            {{-- {{ dd($data) }} --}}
+            {{-- {{ dd($data->rowId) }} --}}
         <div class="cart-single-list">
                 <div class="row align-items-center">
                     <div class="col-lg-1 col-md-1 col-12">
@@ -83,23 +83,23 @@ Shoping Cart Page
                                {{ $data->qty }}
                             </p>
                             <div class="flex-col mt-2 d-flex">
-                                <button class="btn-sm me-2 quantity-increase" id="" value="{{ $data->id }}">
+                                <button class="btn-sm me-2 quantity-increase" id=""  value="{{ json_encode(['rowId' => $data->rowId, 'id' => $data->id]) }}">
                                     +
                                 </button>
-                                <button class="btn-sm quantity-decrease" id="" value="{{ $data->id }}">
+                                <button class="btn-sm quantity-decrease" id=""  value="{{ json_encode(['rowId' => $data->rowId, 'id' => $data->id]) }}">
                                     -
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2 col-12">
-                        <p>${{$data->qty * $data->price}}</p>
+                    <div class="col-lg-2 col-md-2 col-12" >
+                        <p>$<span id="total_price_{{ $data->id }}">{{$data->qty * $data->price}}</span></p>
                     </div>
                     <div class="col-lg-2 col-md-2 col-12">
-                        <p>${{$data->options['regular_price'] - $data->price }}</p>
+                        <p >$<span id="discount_price_{{$data->id}}">{{($data->qty * $data->options['regular_price']) - ($data->qty * $data->price) }}</span></p>
                     </div>
                     <div class="col-lg-1 col-md-2 col-12">
-                        <a class="remove-item" href="javascript:void(0)"><i class="lni lni-close"></i></a>
+                        <button class="remove-item" href="javascript:void(0)" value="{{ $data->rowId }}"><i class="lni lni-close"></i></button>
                     </div>
                 </div>
             </div> 
@@ -149,23 +149,112 @@ Shoping Cart Page
 
 <script>
     $(".quantity-increase").click(function() {
-        let btnId=$(this).val();
-        let select_qty=$("#qty_"+btnId);
+        
+        let btnId= JSON.parse($(this).val());
+        let rowId= btnId.rowId;
+    
+        let select_qty=$("#qty_"+btnId.id);
         let quantity = parseInt(select_qty.text());
-        select_qty.text(quantity + 1);
+        
+        //get the current quantity value start here
+        let updateQuantity=select_qty.text(quantity + 1);
+        let updateQuantityValue=updateQuantity.text();
+        //get the current quantity value end here
+        
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            , }
+        , });
+        
+        $.ajax({
+            url:"/increase-update-quantity/" + rowId,
+            type:"POST",
+            data:{
+                updateQuantityValue
+            },
+            success:function(res){
+                console.log(res);
+                if(res.status=="success"){
+                    // click increase button and update total price start here
+                    let selectTotalTag = $("#total_price_"+btnId.id);
+                    let price = Number(res.data.qty * res.data.price)
+                    console.log("total price",price)
+                    selectTotalTag.text(price)
+                    //click increase button and update total price end here
+
+                    //click increase button and update discount price start here
+                    let selectDiscountTag = $("#discount_price_"+btnId.id);
+                    let discountPrice = Number((res.data.qty*res.data.options.regular_price) - (res.data.qty * res.data.price))
+                    selectDiscountTag.text(discountPrice);
+                    // click increase button and update discount price end here
+
+
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: ", error);
+                var response = JSON.parse(xhr.responseText);
+                console.log("Error Message: ", response.message);
+            }
+        })
     })
     $(".quantity-decrease").click(function() {
-        let btnId=$(this).val();
-        let select_qty=$("#qty_"+btnId);
-        let quantity = parseInt(select_qty.text().trim());
-
+        let btnId= JSON.parse($(this).val());
+        let rowId = btnId.rowId;
+        
+        let select_qty=$("#qty_"+btnId.id);
+        let quantity = parseInt(select_qty.text());
+        let updateDecreaseQuantityValue; 
         if (quantity > 1) {        
             // Decrease the quantity by 1
             select_qty.text(quantity - 1);
+            updateDecreaseQuantityValue =select_qty.text();
+            console.log("Decrease",updateDecreaseQuantityValue);
         } else {
             // If quantity is already 1 or less, set it to 1
             select_qty.text(1);
+            updateDecreaseQuantityValue =select_qty.text();
+            console.log("Decrease",updateDecreaseQuantityValue);
+
         }
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            , }
+        , });
+        $.ajax({
+            url:"/decrease-update-quantity/" + rowId,
+            type:"POST",
+            data:{
+                updateDecreaseQuantityValue,
+                rowId
+            },
+            success:function(res){
+                if(res.status=="success"){
+                    console.log("Decrease",res.data);
+                    //click increase button and update total price start here
+                    let selectTotalTag = $("#total_price_"+btnId.id);
+                    let price = Number(res.data.qty * res.data.price)
+                    console.log("total price",price)
+                    selectTotalTag.text(price)
+                    //click increase button and update total price end here
+
+                    //click increase button and update discount price start here
+                    let selectDiscountTag = $("#discount_price_"+btnId.id);
+                    let discountPrice = Number((res.data.qty*res.data.options.regular_price) - (res.data.qty * res.data.price))
+                    selectDiscountTag.text(discountPrice);
+                    //click increase button and update discount price end here
+
+
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: ", error);
+                var response = JSON.parse(xhr.responseText);
+                console.log("Error Message: ", response.message);
+            }
+        })
     });
 </script>
 

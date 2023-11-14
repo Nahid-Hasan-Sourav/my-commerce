@@ -15,7 +15,19 @@ class CartController extends Controller
     {
 
         $product = Product::find($id);
-      
+         $allCart = Cart::content();
+         $allCartArray = $allCart->values()->all();
+
+        //  for($i=0;$i<count($allCart);$i++){
+        //     $data=$allCart[$i];
+            return response()->json([
+                "data"=>   $allCartArray,
+                "status" => "200",
+                "message" => "The product added successfully ",
+            ]);
+        //  }
+         
+         
         $itemData = [
             'id'                => $product->id,
             'name'              => $product->name,
@@ -43,6 +55,24 @@ class CartController extends Controller
         $datas = Cart::content();
         // dd($datas);
         return view('website.cart.index',compact('datas'));
+    }
+
+    public function increaseUpdateQuantity(Request $request,$rowId){
+        $updateData = Cart::update($rowId,['qty' => $request->updateQuantityValue]);
+        
+        return response()->json([
+            "status"=>"success",
+            "data"=> $updateData
+        ]);
+    }
+
+    public function decreaseUpdateQuantity(Request $request,$rowId){
+        $updateData = Cart::update($request->rowId,['qty' => $request->updateDecreaseQuantityValue]);
+     
+        return response()->json([
+            "status"=>"success",
+            "data"=> $updateData
+        ]);
     }
 
 }
