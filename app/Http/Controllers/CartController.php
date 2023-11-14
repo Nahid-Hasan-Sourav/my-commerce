@@ -17,15 +17,15 @@ class CartController extends Controller
         $product = Product::find($id);
       
         $itemData = [
-            'id' => $product->id,
-            'name' => $product->name,
-            'qty' => $request->qty,
-            'price' => $product->selling_price,
+            'id'                => $product->id,
+            'name'              => $product->name,
+            'qty'               => $request->qty,
+            'price'             => $product->selling_price,
             'options' => [
-                'image'  =>$product->image,
-                'regular_price' => $product->regular_price,
+                'image'             => $product->image,
+                'regular_price'     => $product->regular_price,
                 'sub_category_name' => $product->subCategory->name,
-                // Add more options as needed
+                'category_name'     => $product->category->name
             ],
         ];
         Cart::add($itemData);

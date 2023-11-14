@@ -41,7 +41,7 @@ Shoping Cart Page
                         <p>Quantity</p>
                     </div>
                     <div class="col-lg-2 col-md-2 col-12">
-                        <p>Subtotal</p>
+                        <p>Total</p>
                     </div>
                     <div class="col-lg-2 col-md-2 col-12">
                         <p>Discount</p>
@@ -51,37 +51,52 @@ Shoping Cart Page
                     </div>
                 </div>
             </div>
+          
+        
+        
 
+           
             @foreach ($datas as $data)
-               <div class="cart-single-list">
+            {{-- {{ dd($data) }} --}}
+        <div class="cart-single-list">
                 <div class="row align-items-center">
                     <div class="col-lg-1 col-md-1 col-12">
-                        <a href=""><img src="{{asset($data->image)}}" alt=""></a>
+                        <a href=""><img  src="{{ asset($data->options['image']) }}" alt=""></a>
                     </div>
                     <div class="col-lg-4 col-md-3 col-12">
-                        <h5 class="product-name"><a href="">
+           
+            <h5 class="product-name"><a href="{{ route('product.singleDetails',['id'=>$data->id]) }}">
                                 {{ $data->name }}</a></h5>
                         <p class="product-des">
-                            <span><em>Type:</em> Mirrorless</span>
-                            <span><em>Color:</em> Black</span>
+                            <span>
+                                <em>Category: </em> {{ isset($data->options['category_name']) ? $data->options['category_name'] : 'N/A' }}
+                            </span> 
+                        <span>
+                            <em>Sub-Cat : </em> 
+                            {{ isset($data->options['sub_category_name']) ? $data->options['sub_category_name'] : 'N/A' }}
+                            </span>
                         </p>
                     </div>
                     <div class="col-lg-2 col-md-2 col-12">
                         <div class="count-input">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            <p name="qty" id="qty_{{ $data->id }}" class="form-control qty" placeholder="" style="width:40px">
+                               {{ $data->qty }}
+                            </p>
+                            <div class="flex-col mt-2 d-flex">
+                                <button class="btn-sm me-2 quantity-increase" id="" value="{{ $data->id }}">
+                                    +
+                                </button>
+                                <button class="btn-sm quantity-decrease" id="" value="{{ $data->id }}">
+                                    -
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-12">
-                        <p>$910.00</p>
+                        <p>${{$data->qty * $data->price}}</p>
                     </div>
                     <div class="col-lg-2 col-md-2 col-12">
-                        <p>$29.00</p>
+                        <p>${{$data->options['regular_price'] - $data->price }}</p>
                     </div>
                     <div class="col-lg-1 col-md-2 col-12">
                         <a class="remove-item" href="javascript:void(0)"><i class="lni lni-close"></i></a>
@@ -90,79 +105,6 @@ Shoping Cart Page
             </div> 
             @endforeach
             
-
-
-            {{-- <div class="cart-single-list">
-                <div class="row align-items-center">
-                    <div class="col-lg-1 col-md-1 col-12">
-                        <a href="product-details.html"><img src="{{asset('/')}}website/assets/images/cart/02.jpg" alt="#"></a>
-                    </div>
-                    <div class="col-lg-4 col-md-3 col-12">
-                        <h5 class="product-name"><a href="product-details.html">
-                                Apple iPhone X 256 GB Space Gray</a></h5>
-                        <p class="product-des">
-                            <span><em>Memory:</em> 256 GB</span>
-                            <span><em>Color:</em> Space Gray</span>
-                        </p>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-12">
-                        <div class="count-input">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-12">
-                        <p>$1100.00</p>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-12">
-                        <p>—</p>
-                    </div>
-                    <div class="col-lg-1 col-md-2 col-12">
-                        <a class="remove-item" href="javascript:void(0)"><i class="lni lni-close"></i></a>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="cart-single-list">
-                <div class="row align-items-center">
-                    <div class="col-lg-1 col-md-1 col-12">
-                        <a href="product-details.html"><img src="{{asset('/')}}website/assets/images/cart/03.jpg" alt="#"></a>
-                    </div>
-                    <div class="col-lg-4 col-md-3 col-12">
-                        <h5 class="product-name"><a href="product-details.html">HP LaserJet Pro Laser Printer</a></h5>
-                        <p class="product-des">
-                            <span><em>Type:</em> Laser</span>
-                            <span><em>Color:</em> White</span>
-                        </p>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-12">
-                        <div class="count-input">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-12">
-                        <p>$550.00</p>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-12">
-                        <p>—</p>
-                    </div>
-                    <div class="col-lg-1 col-md-2 col-12">
-                        <a class="remove-item" href="javascript:void(0)"><i class="lni lni-close"></i></a>
-                    </div>
-                </div>
-            </div> --}}
 
         </div>
         <div class="row">
@@ -203,5 +145,28 @@ Shoping Cart Page
         </div>
     </div>
 </div>
+
+
+<script>
+    $(".quantity-increase").click(function() {
+        let btnId=$(this).val();
+        let select_qty=$("#qty_"+btnId);
+        let quantity = parseInt(select_qty.text());
+        select_qty.text(quantity + 1);
+    })
+    $(".quantity-decrease").click(function() {
+        let btnId=$(this).val();
+        let select_qty=$("#qty_"+btnId);
+        let quantity = parseInt(select_qty.text().trim());
+
+        if (quantity > 1) {        
+            // Decrease the quantity by 1
+            select_qty.text(quantity - 1);
+        } else {
+            // If quantity is already 1 or less, set it to 1
+            select_qty.text(1);
+        }
+    });
+</script>
 
 @endsection
