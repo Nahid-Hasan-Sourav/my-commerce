@@ -55,7 +55,7 @@ Shoping Cart Page
         
         
 
-           
+            @php($sum=0)
             @foreach ($datas as $data)
             {{-- {{ dd($data->rowId) }} --}}
         <div class="cart-single-list">
@@ -103,6 +103,7 @@ Shoping Cart Page
                     </div>
                 </div>
             </div> 
+            @php($sum=$sum+($data->qty * $data->price))
             @endforeach
             
 
@@ -113,7 +114,7 @@ Shoping Cart Page
                 <div class="total-amount">
                     <div class="row">
                         <div class="col-lg-8 col-md-6 col-12">
-                            <div class="left">
+                            {{-- <div class="left">
                                 <div class="coupon">
                                     <form action="#" target="_blank">
                                         <input name="Coupon" placeholder="Enter Your Coupon">
@@ -122,12 +123,12 @@ Shoping Cart Page
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
                             <div class="right">
                                 <ul>
-                                    <li>Cart Subtotal<span>$2560.00</span></li>
+                                    <li>Totall Price<span>$<span id="total-price">{{ $sum }}</span></span></li>
                                     <li>Shipping<span>Free</span></li>
                                     <li>You Save<span>$29.00</span></li>
                                     <li class="last">You Pay<span>$2531.00</span></li>
@@ -176,6 +177,7 @@ Shoping Cart Page
             success:function(res){
                 console.log(res);
                 if(res.status=="success"){
+                    console.log("single data",res.data);
                     // click increase button and update total price start here
                     let selectTotalTag = $("#total_price_"+btnId.id);
                     let price = Number(res.data.qty * res.data.price)
@@ -188,8 +190,14 @@ Shoping Cart Page
                     let discountPrice = Number((res.data.qty*res.data.options.regular_price) - (res.data.qty * res.data.price))
                     selectDiscountTag.text(discountPrice);
                     // click increase button and update discount price end here
+                    
+                    //update the total price in order card start here 
+                    let totalPrice = $("#total-price").text();
+                    $("#total-price").text(Number(totalPrice)+res.data.price)
+                     //update the total price in order card end here 
 
-
+                     
+                    
                 }
             },
             error: function(xhr, status, error) {
@@ -210,19 +218,15 @@ Shoping Cart Page
             // Decrease the quantity by 1
             select_qty.text(quantity - 1);
             updateDecreaseQuantityValue =select_qty.text();
-            console.log("Decrease",updateDecreaseQuantityValue);
-        } else {
-            // If quantity is already 1 or less, set it to 1
-            select_qty.text(1);
-            updateDecreaseQuantityValue =select_qty.text();
-            console.log("Decrease",updateDecreaseQuantityValue);
-
-        }
+            
+            //ajax call here for update the total price.
+            //jodi quantity 1 hoy tahohole value decrease hobe na so total price minus hobe na (+/-) button a click korleo
         $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
             , }
         , });
+        
         $.ajax({
             url:"/decrease-update-quantity/" + rowId,
             type:"POST",
@@ -246,6 +250,10 @@ Shoping Cart Page
                     selectDiscountTag.text(discountPrice);
                     //click increase button and update discount price end here
 
+                     //update the total price in order card start here 
+                     let totalPrice = $("#total-price").text();
+                     $("#total-price").text(Number(totalPrice)-res.data.price)
+                     //update the total price in order card end here 
 
                 }
             },
@@ -255,6 +263,56 @@ Shoping Cart Page
                 console.log("Error Message: ", response.message);
             }
         })
+        } else {
+            // If quantity is already 1 or less, set it to 1
+            select_qty.text(1);
+            updateDecreaseQuantityValue =select_qty.text();
+            console.log("Decrease",updateDecreaseQuantityValue);
+
+            
+
+        }
+        // $.ajaxSetup({
+        //     headers: {
+        //         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        //     , }
+        // , });
+        // $.ajax({
+        //     url:"/decrease-update-quantity/" + rowId,
+        //     type:"POST",
+        //     data:{
+        //         updateDecreaseQuantityValue,
+        //         rowId
+        //     },
+        //     success:function(res){
+        //         if(res.status=="success"){
+        //             console.log("Decrease",res.data);
+        //             //click increase button and update total price start here
+        //             let selectTotalTag = $("#total_price_"+btnId.id);
+        //             let price = Number(res.data.qty * res.data.price)
+        //             console.log("total price",price)
+        //             selectTotalTag.text(price)
+        //             //click increase button and update total price end here
+
+        //             //click increase button and update discount price start here
+        //             let selectDiscountTag = $("#discount_price_"+btnId.id);
+        //             let discountPrice = Number((res.data.qty*res.data.options.regular_price) - (res.data.qty * res.data.price))
+        //             selectDiscountTag.text(discountPrice);
+        //             //click increase button and update discount price end here
+
+        //              //update the total price in order card start here 
+        //              let totalPrice = $("#total-price").text();
+        //              $("#total-price").text(Number(totalPrice)-res.data.price)
+        //              //update the total price in order card end here 
+
+        //         }
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.log("Error: ", error);
+        //         var response = JSON.parse(xhr.responseText);
+        //         console.log("Error Message: ", response.message);
+        //     }
+        // })
     });
 
     //delete item from cart
