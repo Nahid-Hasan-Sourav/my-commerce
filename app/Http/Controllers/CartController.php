@@ -13,61 +13,62 @@ class CartController extends Controller
     // }
     public function addToCart(Request $request, $id)
     {
-
-        $product = Product::find($id);
+       
+         $product = Product::find($id);
          $allCart = Cart::content();
          $allCartArray = $allCart->values()->all();
-
-         foreach( $allCartArray as $data){
-          if($data->id == $id){
-            $updateData = Cart::update($data->rowId,['qty' => $data->qty+1]);
-             return response()->json([
-            "status" => "200",
-            "message" => "The productalready exit successfully ",
-        ]);
-          }
-          else{
-             $itemData = [
-            'id'                => $product->id,
-            'name'              => $product->name,
-            'qty'               => $request->qty,
-            'price'             => $product->selling_price,
-            'options' => [
-                'image'             => $product->image,
-                'regular_price'     => $product->regular_price,
-                'sub_category_name' => $product->subCategory->name,
-                'category_name'     => $product->category->name
-            ],
-        ];
-        Cart::add($itemData);
-     
-        return response()->json([
-            "status" => "200",
-            "message" => "The product added successfully ",
-        ]);
-          }
-         }
+        if(empty($allCart)){
+            foreach( $allCartArray as $data){
+                if($data->id == $id){
+                  $updateData = Cart::update($data->rowId,['qty' => $data->qty+1]);
+                   return response()->json([
+                  "status" => "success",
+                  "message" => "The product is already exit in cart ",
+              ],200);
+                }
+                else{
+                   $itemData = [
+                  'id'                => $product->id,
+                  'name'              => $product->name,
+                  'qty'               => $request->qty,
+                  'price'             => $product->selling_price,
+                  'options' => [
+                      'image'             => $product->image,
+                      'regular_price'     => $product->regular_price,
+                      'sub_category_name' => $product->subCategory->name,
+                      'category_name'     => $product->category->name
+                  ],
+              ];
+              Cart::add($itemData);
+           
+              return response()->json([
+                  "status" => "success",
+                  "message" => "The product added successfully ",
+              ],200);
+                }
+               }
+        }
+        else{
+            $itemData = [
+                'id'                => $product->id,
+                'name'              => $product->name,
+                'qty'               => $request->qty,
+                'price'             => $product->selling_price,
+                'options' => [
+                    'image'             => $product->image,
+                    'regular_price'     => $product->regular_price,
+                    'sub_category_name' => $product->subCategory->name,
+                    'category_name'     => $product->category->name
+                ],
+            ];
+            Cart::add($itemData);
+         
+            return response()->json([
+                "status" => "success",
+                "message" => "The product added successfully ",
+            ],200);
+        }
         
-        // $itemData = [
-        //     'id'                => $product->id,
-        //     'name'              => $product->name,
-        //     'qty'               => $request->qty,
-        //     'price'             => $product->selling_price,
-        //     'options' => [
-        //         'image'             => $product->image,
-        //         'regular_price'     => $product->regular_price,
-        //         'sub_category_name' => $product->subCategory->name,
-        //         'category_name'     => $product->category->name
-        //     ],
-        // ];
-        // Cart::add($itemData);
-     
-        // return response()->json([
-        //     "status" => "200",
-        //     "message" => "The product added successfully ",
-        // ]);
-      
-
     }
 
     public function showCart()
@@ -93,6 +94,18 @@ class CartController extends Controller
             "status"=>"success",
             "data"=> $updateData
         ]);
+    }
+
+    public function deleteItemFromCart($rowId){
+        $delete = Cart::remove($rowId);
+
+        // if($delete){
+            return response()->json([
+                "status" => "success",
+                "data"   =>  $delete,
+                "message"=> "Item Delete From Cart"
+            ]);
+        // }
     }
 
 }

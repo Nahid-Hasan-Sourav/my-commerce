@@ -99,7 +99,7 @@ Shoping Cart Page
                         <p >$<span id="discount_price_{{$data->id}}">{{($data->qty * $data->options['regular_price']) - ($data->qty * $data->price) }}</span></p>
                     </div>
                     <div class="col-lg-1 col-md-2 col-12">
-                        <button class="remove-item" href="javascript:void(0)" value="{{ $data->rowId }}"><i class="lni lni-close"></i></button>
+                        <button class="remove-item" id="remove-item"  value="{{$data->rowId}}" onclick="deleteItem('{{$data->rowId}}')"><i class="lni lni-close"></i></button>
                     </div>
                 </div>
             </div> 
@@ -256,6 +256,67 @@ Shoping Cart Page
             }
         })
     });
+
+    //delete item from cart
+    // $(".remove-item").click(function(){
+    //     let rowId = $(".remove-item").val();
+      
+    //     // alert(rowId)
+    // })
+    
+    function deleteItem(rowId){
+    //  console.log("row id",rowId);
+     Swal.fire({
+        title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+
+     }).then((res) => {
+        console.log("Response alert",res)
+        if(res.isConfirmed){
+            $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            , }
+        , });
+
+        $.ajax({
+            url: "/delete-cart-item/" + rowId,
+            type: "DELETE",          
+     
+            success: function(response) {
+            console.log("After Delete ",response)
+                if (response.status == "success") {
+                    Swal.fire({
+                    title: 'Deleted!',
+                    text: response.message,
+                    icon: 'success',
+                    timer: 5000
+                    }); 
+                    window.location.href = "{{ route('show-cart') }}";
+
+                }
+
+                // console.log("Id", response);
+
+
+            }
+            , error: function(xhr, status, error) {
+                console.log("Error: ", error);
+                var response = JSON.parse(xhr.responseText);
+                console.log("Error Message: ", response.message);
+            }
+        , });
+
+        
+        }
+     });
+
+    }
 </script>
 
 @endsection

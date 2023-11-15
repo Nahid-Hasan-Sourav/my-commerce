@@ -358,7 +358,7 @@ Product Detail
      
             success: function(response) {
 
-                if (response.status == "200") {
+                if (response.status == "success") {
                     console.log("all cart data",response.data);
 
                     Swal.fire({
@@ -373,7 +373,7 @@ Product Detail
                     });
                 }
 
-                console.log("Id", response);
+                // console.log("Id", response);
 
 
             }
