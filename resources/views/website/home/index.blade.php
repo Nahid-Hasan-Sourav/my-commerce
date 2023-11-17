@@ -230,8 +230,7 @@ Home
                             </div>
                         </div>
                         <div class="product-info">
-                            <span class="category">{{ $product->category->name }}</span>
-                            <h4 class="title">
+                            <span class="category">{{ optional($product->category)->name }}</span>                            <h4 class="title">
                                 <a  href="{{ route('product.singleDetails',['id'=>$product->id])}}">{{ $product->name }}</a>
                             </h4>
                             <ul class="review">
@@ -247,11 +246,11 @@ Home
                             </div>
                         </div>
                     </div>
-        
-                </a>   
+
+                </a>
             </div>
             @endforeach
-            
+
         </div>
     </div>
 </section>

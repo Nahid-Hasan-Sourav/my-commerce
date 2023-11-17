@@ -51,9 +51,9 @@ Shoping Cart Page
                     </div>
                 </div>
             </div>
-          
-        
-        
+
+
+
 
             @php($sum=0)
             @foreach ($datas as $data)
@@ -64,15 +64,15 @@ Shoping Cart Page
                         <a href=""><img  src="{{ asset($data->options['image']) }}" alt=""></a>
                     </div>
                     <div class="col-lg-4 col-md-3 col-12">
-           
+
             <h5 class="product-name"><a href="{{ route('product.singleDetails',['id'=>$data->id]) }}">
                                 {{ $data->name }}</a></h5>
                         <p class="product-des">
                             <span>
                                 <em>Category: </em> {{ isset($data->options['category_name']) ? $data->options['category_name'] : 'N/A' }}
-                            </span> 
+                            </span>
                         <span>
-                            <em>Sub-Cat : </em> 
+                            <em>Sub-Cat : </em>
                             {{ isset($data->options['sub_category_name']) ? $data->options['sub_category_name'] : 'N/A' }}
                             </span>
                         </p>
@@ -102,10 +102,10 @@ Shoping Cart Page
                         <button class="remove-item" id="remove-item"  value="{{$data->rowId}}" onclick="deleteItem('{{$data->rowId}}')"><i class="lni lni-close"></i></button>
                     </div>
                 </div>
-            </div> 
+            </div>
             @php($sum=$sum+($data->qty * $data->price))
             @endforeach
-            
+
 
         </div>
         <div class="row">
@@ -129,9 +129,17 @@ Shoping Cart Page
                             <div class="right">
                                 <ul>
                                     <li>Totall Price<span>$<span id="total-price">{{ $sum }}</span></span></li>
-                                    <li>Shipping<span>Free</span></li>
-                                    <li>You Save<span>$29.00</span></li>
-                                    <li class="last">You Pay<span>$2531.00</span></li>
+                                    <li>
+                                        Tax(15%)
+
+                                        <span id="tax" name="tax">
+
+                                            {{ $tax=($sum*15)/100 }}
+                                        </span>
+                                    </li>
+                                    <li>Shipping<span id="shipping">100</span></li>
+                                    {{-- <li>You Save<span>$29.00</span></li> --}}
+                                    <li class="last">Totall Payable<span id="totall-payable">{{ $sum+$tax+100}}</span></li>
                                 </ul>
                                 <div class="button">
                                     <a href="{{route('checkout')}}" class="btn">Checkout</a>
@@ -150,24 +158,24 @@ Shoping Cart Page
 
 <script>
     $(".quantity-increase").click(function() {
-        
+
         let btnId= JSON.parse($(this).val());
         let rowId= btnId.rowId;
-    
+
         let select_qty=$("#qty_"+btnId.id);
         let quantity = parseInt(select_qty.text());
-        
+
         //get the current quantity value start here
         let updateQuantity=select_qty.text(quantity + 1);
         let updateQuantityValue=updateQuantity.text();
         //get the current quantity value end here
-        
+
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
             , }
         , });
-        
+
         $.ajax({
             url:"/increase-update-quantity/" + rowId,
             type:"POST",
@@ -181,7 +189,7 @@ Shoping Cart Page
                     // click increase button and update total price start here
                     let selectTotalTag = $("#total_price_"+btnId.id);
                     let price = Number(res.data.qty * res.data.price)
-                    console.log("total price",price)
+                    // console.log("total price",price)
                     selectTotalTag.text(price)
                     //click increase button and update total price end here
 
@@ -190,14 +198,27 @@ Shoping Cart Page
                     let discountPrice = Number((res.data.qty*res.data.options.regular_price) - (res.data.qty * res.data.price))
                     selectDiscountTag.text(discountPrice);
                     // click increase button and update discount price end here
-                    
-                    //update the total price in order card start here 
+
+                    //update the total price in order card start here
                     let totalPrice = $("#total-price").text();
                     $("#total-price").text(Number(totalPrice)+res.data.price)
-                     //update the total price in order card end here 
+                     //update the total price in order card end here
 
-                     
-                    
+                    //click the increase button and update the tax start here
+                    let totalPrices = Number($("#total-price").text());
+                    totalPrices=(totalPrices*15)/100
+                    $("#tax").text(totalPrices)
+                    // console.log("Total price click on + button",typeof(totalPrices));
+                    //click the decrease button and update the tax end here
+
+                    //update the totall payable price start here
+                    let total_prices = Number($("#total-price").text());
+                    let tax=Number($("#tax").text());
+
+                    $("#totall-payable").text(total_prices+tax+100)
+                    //update the totall payable price end here
+
+
                 }
             },
             error: function(xhr, status, error) {
@@ -210,15 +231,15 @@ Shoping Cart Page
     $(".quantity-decrease").click(function() {
         let btnId= JSON.parse($(this).val());
         let rowId = btnId.rowId;
-        
+
         let select_qty=$("#qty_"+btnId.id);
         let quantity = parseInt(select_qty.text());
-        let updateDecreaseQuantityValue; 
-        if (quantity > 1) {        
+        let updateDecreaseQuantityValue;
+        if (quantity > 1) {
             // Decrease the quantity by 1
             select_qty.text(quantity - 1);
             updateDecreaseQuantityValue =select_qty.text();
-            
+
             //ajax call here for update the total price.
             //jodi quantity 1 hoy tahohole value decrease hobe na so total price minus hobe na (+/-) button a click korleo
         $.ajaxSetup({
@@ -226,7 +247,7 @@ Shoping Cart Page
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
             , }
         , });
-        
+
         $.ajax({
             url:"/decrease-update-quantity/" + rowId,
             type:"POST",
@@ -250,10 +271,24 @@ Shoping Cart Page
                     selectDiscountTag.text(discountPrice);
                     //click increase button and update discount price end here
 
-                     //update the total price in order card start here 
+                     //update the total price in order card start here
                      let totalPrice = $("#total-price").text();
                      $("#total-price").text(Number(totalPrice)-res.data.price)
-                     //update the total price in order card end here 
+                     //update the total price in order card end here
+
+                      //click the decrease button and update the tax start here
+                    let totalPrices = Number($("#total-price").text());
+                    totalPrices=(totalPrices*15)/100
+                    $("#tax").text(totalPrices)
+                    // console.log("Total price click on + button",typeof(totalPrices));
+                    //click the decrease button and update the tax end here
+
+                    //update the totall payable price start here
+                    let total_prices = Number($("#total-price").text());
+                    let tax=Number($("#tax").text());
+
+                    $("#totall-payable").text(total_prices+tax+100)
+                    //update the totall payable price end here
 
                 }
             },
@@ -269,7 +304,7 @@ Shoping Cart Page
             updateDecreaseQuantityValue =select_qty.text();
             console.log("Decrease",updateDecreaseQuantityValue);
 
-            
+
 
         }
         // $.ajaxSetup({
@@ -300,10 +335,10 @@ Shoping Cart Page
         //             selectDiscountTag.text(discountPrice);
         //             //click increase button and update discount price end here
 
-        //              //update the total price in order card start here 
+        //              //update the total price in order card start here
         //              let totalPrice = $("#total-price").text();
         //              $("#total-price").text(Number(totalPrice)-res.data.price)
-        //              //update the total price in order card end here 
+        //              //update the total price in order card end here
 
         //         }
         //     },
@@ -318,10 +353,10 @@ Shoping Cart Page
     //delete item from cart
     // $(".remove-item").click(function(){
     //     let rowId = $(".remove-item").val();
-      
+
     //     // alert(rowId)
     // })
-    
+
     function deleteItem(rowId){
     //  console.log("row id",rowId);
      Swal.fire({
@@ -344,8 +379,8 @@ Shoping Cart Page
 
         $.ajax({
             url: "/delete-cart-item/" + rowId,
-            type: "DELETE",          
-     
+            type: "DELETE",
+
             success: function(response) {
             console.log("After Delete ",response)
                 if (response.status == "success") {
@@ -354,7 +389,7 @@ Shoping Cart Page
                     text: response.message,
                     icon: 'success',
                     timer: 5000
-                    }); 
+                    });
                     window.location.href = "{{ route('show-cart') }}";
 
                 }
@@ -370,7 +405,7 @@ Shoping Cart Page
             }
         , });
 
-        
+
         }
      });
 
