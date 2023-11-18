@@ -32,7 +32,7 @@ Product Detail
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-12 col-12">
                     <div class="product-images">
-                        <main id="gallery">
+                        {{-- <main id="gallery">
                             <div class="main-img">
                                 <img src="{{asset($productDetails->image)}}" id="current" alt="#">
                             </div>
@@ -41,7 +41,16 @@ Product Detail
                                 <img src="{{asset($image->image)}}" class="img" alt="#">
                                 @endforeach
                             </div>
-                        </main>
+                        </main> --}}
+                        <div class="xzoom-container">
+                            <img class="xzoom" id="xzoom-default" src="{{ asset('/') }}website/assets/images/plugin/gallery/preview/01_b_car.jpg" xoriginal="{{ asset('/') }}website/assets/images/plugin/gallery/original/01_b_car.jpg" />
+                            <div class="xzoom-thumbs">
+                              <a href="{{ asset('/') }}website/assets/images/plugin/gallery/original/01_b_car.jpg"><img class="xzoom-gallery" width="80" src="{{ asset('/') }}website/assets/images/plugin/gallery/thumbs/01_b_car.jpg"  xpreview="{{ asset('/') }}website/assets/images/plugin/gallery/preview/01_b_car.jpg" title="The description goes here"></a>
+                              <a href="{{ asset('/') }}website/assets/images/plugin/gallery/original/02_o_car.jpg"><img class="xzoom-gallery" width="80" src="{{ asset('/') }}website/assets/images/plugin/gallery/preview/02_o_car.jpg" title="The description goes here"></a>
+                              <a href="{{ asset('/') }}website/assets/images/plugin/gallery/original/03_r_car.jpg"><img class="xzoom-gallery" width="80" src="{{ asset('/') }}website/assets/images/plugin/gallery/preview/03_r_car.jpg" title="The description goes here"></a>
+                              <a href="{{ asset('/') }}website/assets/images/plugin/gallery/original/04_g_car.jpg"><img class="xzoom-gallery" width="80" src="{{ asset('/') }}website/assets/images/plugin/gallery/preview/04_g_car.jpg" title="The description goes here"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-12">
@@ -355,7 +364,7 @@ Product Detail
             data: {
                 qty
             },
-     
+
             success: function(response) {
 
                 if (response.status == "success") {

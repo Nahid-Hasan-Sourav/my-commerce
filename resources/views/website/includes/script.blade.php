@@ -5,6 +5,13 @@
 <script src="{{asset('/')}}website/assets/js/tiny-slider.js"></script>
 <script src="{{asset('/')}}website/assets/js/glightbox.min.js"></script>
 <script src="{{asset('/')}}website/assets/js/main.js"></script>
+<script src="{{asset('/')}}website/assets/js/foundation.min.js"></script>
+<script src="{{asset('/')}}website/assets/js/setup.js"></script>
+<script src="{{asset('/')}}website/assets/js/jquery.js"></script>
+
+
+
+
 <script type="text/javascript">
         //========= Hero Slider
         tns({
