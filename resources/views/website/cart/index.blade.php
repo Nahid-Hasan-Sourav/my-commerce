@@ -128,7 +128,7 @@ Shoping Cart Page
                         <div class="col-lg-4 col-md-6 col-12">
                             <div class="right">
                                 <ul>
-                                    <li>Totall Price<span>$<span id="total-price">{{ $sum }}</span></span></li>
+                                    <li>Totall Price<span>$<span id="total-price">{{ $orderTotal=$sum }}</span></span></li>
                                     <li>
                                         Tax(15%)
 
@@ -137,10 +137,16 @@ Shoping Cart Page
                                             {{ $tax=($sum*15)/100 }}
                                         </span>
                                     </li>
-                                    <li>Shipping<span id="shipping">100</span></li>
+                                    <li>Shipping<span id="shipping">{{ $shipping=100 }}</span></li>
                                     {{-- <li>You Save<span>$29.00</span></li> --}}
-                                    <li class="last">Totall Payable<span id="totall-payable">{{ $sum+$tax+100}}</span></li>
+                                    <li class="last">Totall Payable<span id="totall-payable">{{$sum+$tax+100}}</span></li>
                                 </ul>
+                                <?php 
+                                
+                                Session::put('order_totall',$orderTotal);
+                                Session::put('totall_tax',$tax);
+                                Session::put('shipping_total',$shipping);
+                                ?>
                                 <div class="button">
                                     <a href="{{route('checkout')}}" class="btn">Checkout</a>
                                     <a href="product-grids.html" class="btn btn-alt">Continue shopping</a>

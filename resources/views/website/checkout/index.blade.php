@@ -41,62 +41,90 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="cash">
-                                <div class="row">
-
-                                   <div class="col-md-12">
-                                    <div class="single-form form-default">
-                                        <label>Full Name</label>
-                                        <div class="col-md-12 form-input form">
-                                            <input type="text" required name="name" placeholder="Full Name">
-                                        </div>
-                                    </div>
-                                   </div>
-
-                                   <div class="col-md-6">
-                                    <div class="single-form form-default">
-                                        <label>Email Address</label>
-                                        <div class="col-md-12 form-input form">
-                                            <input type="email" required name="email" placeholder="Email">
-                                        </div>
-                                    </div>
-                                   </div>
-
-                                   <div class="col-md-6">
-                                    <div class="single-form form-default">
-                                        <label>Phone Number</label>
-                                        <div class="col-md-12 form-input form">
-                                            <input type="tel" name="name" placeholder="Number">
-                                        </div>
-                                    </div>
-                                   </div>
-
-                                   <div class="col-md-12">
-                                    <div class="single-form form-default">
-                                        <label>Delivery Address</label>
-                                        <div class="col-md-12 form-input form">
-                                            <textarea placeholder="Order Delivery Address">
-
-                                            </textarea>
-                                        </div>
-                                    </div>
-                                   </div>
-
-
-                                    <div class="single-checkbox checkbox-style-3">
-                                        <input type="checkbox" id="checkbox-3" checked>
-                                        <label for="checkbox-3"><span></span></label>
-                                        <p>
-                                         I accept all terms & conditions
-                                        </p>
-                                    </div>
-                                 <div class="col-md-12">
-                                    <div class="single-form button">
-                                        <button type="submit" class="btn">
-                                            Confirm Order
-                                        </button>
-                                    </div>
-                                 </div>
+                                @if(session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
                                 </div>
+                                @endif
+        
+                             <form method="POST" action="{{ route('new.cash.order') }}">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-12">
+                                     <div class="single-form form-default">
+                                         <label>Full Name</label>
+                                         <div class="col-md-12 form-input form">
+                                             <input type="text" required name="name" placeholder="Full Name">
+                                         </div>
+                                     </div>
+                                    </div>
+ 
+                                    <div class="col-md-6">
+                                     <div class="single-form form-default">
+                                         <label>Email Address</label>
+                                         <div class="col-md-12 form-input form">
+                                             <input type="email" required name="email" placeholder="Email">
+                                         </div>
+                                     </div>
+                                    </div>
+ 
+                                    <div class="col-md-6">
+                                     <div class="single-form form-default">
+                                         <label>Phone Number</label>
+                                         <div class="col-md-12 form-input form">
+                                             <input type="tel" name="mobile" placeholder="Number">
+                                         </div>
+                                     </div>
+                                    </div>
+ 
+                                    <div class="col-md-12">
+                                     <div class="single-form form-default">
+                                         <label>Delivery Address</label>
+                                         <div class="col-md-12 form-input form">
+                                             <textarea placeholder="Order Delivery Address" name="delivery_address">
+ 
+                                             </textarea>
+                                         </div>
+                                     </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="single-form form-default">
+                                            <label>NID</label>
+                                            <div class="col-md-12 form-input form">
+                                                <input type="text" name="nid" placeholder="Nid">
+                                            </div>
+                                        </div>
+                                       </div>
+
+                                    <div class="col-md-12">
+                                        <div class="single-form form-default">
+                                            <label>Payment Type</label>
+                                            <div class="">
+                                                <label>
+                                                    <input type="radio" checked name="payment_type" value="1"> Cash On Delivery
+                                                </label>
+                                            </div>
+                                        </div>
+                                       </div>
+ 
+ 
+                                     <div class="single-checkbox checkbox-style-3">
+                                         <input type="checkbox" id="checkbox-3" checked>
+                                         <label for="checkbox-3"><span></span></label>
+                                         <p>
+                                          I accept all terms & conditions
+                                         </p>
+                                     </div>
+                                  <div class="col-md-12">
+                                     <div class="single-form button">
+                                         <button type="submit" class="btn">
+                                             Confirm Order
+                                         </button>
+                                     </div>
+                                  </div>
+                                 </div>
+                             </form>
                             </div>
                             <div class="tab-pane fade show" id="online">
 

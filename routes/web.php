@@ -33,7 +33,9 @@ Route::post('/increase-update-quantity/{id}',[CartController::class,'increaseUpd
 Route::post('/decrease-update-quantity/{id}',[CartController::class,'decreaseUpdateQuantity'])   ->name('update.quantity');
 Route::get('/show-cart',[CartController::class,'showCart'])                                      ->name('show-cart');
 Route::get('/checkout',[CheckoutController::class,'index'])                                      ->name('checkout');
-
+Route::post('new-cash-order',[CheckoutController::class,'newCashOrder'])                         ->name('new.cash.order');
+Route::get('complete-order',[CheckoutController::class,'completeOrder'])                         ->name('new.complete.order');
+ 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
