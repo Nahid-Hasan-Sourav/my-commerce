@@ -27,7 +27,7 @@
                                  <div class="single-form form-default">
                                      <label>Password</label>
                                      <div class=" form-input form">
-                                         <input type="tel" class="w-100" name="mobile" placeholder="Password">
+                                         <input type="tel" class="w-100" name="password" placeholder="Password">
                                      </div>
                                  </div>
                                 </div>
@@ -52,7 +52,7 @@
                                 <div class="row justify-content-center">
                                     <div class="">
                                         <div class="checkout-steps-form-style-1">
-                                                 <form method="POST" action="{{ route('new.cash.order') }}">
+                                                 <form method="POST" action="{{ route('customer.register') }}">
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col-md-12">

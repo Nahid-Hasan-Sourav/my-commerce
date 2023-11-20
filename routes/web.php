@@ -34,12 +34,13 @@ Route::post('/increase-update-quantity/{id}',[CartController::class,'increaseUpd
 Route::post('/decrease-update-quantity/{id}',[CartController::class,'decreaseUpdateQuantity'])   ->name('update.quantity');
 Route::get('/show-cart',[CartController::class,'showCart'])                                      ->name('show-cart');
 Route::get('/checkout',[CheckoutController::class,'index'])                                      ->name('checkout');
-Route::post('new-cash-order',[CheckoutController::class,'newCashOrder'])                         ->name('new.cash.order');
-Route::get('complete-order',[CheckoutController::class,'completeOrder'])                         ->name('new.complete.order');
+Route::post('/new-cash-order',[CheckoutController::class,'newCashOrder'])                         ->name('new.cash.order');
+Route::get('/complete-order',[CheckoutController::class,'completeOrder'])                         ->name('new.complete.order');
 
 Route::get('customer/login/view',[CustomerAuthController::class,'index'])                        ->name('customer.login.view');
-Route::post('customer/login',[CustomerAuthController::class,'login'])                            ->name('customer.login');
-Route::get('customer/register',[CustomerAuthController::class,'register'])                       ->name('customer.register.view'); 
+Route::post('customer-login',[CustomerAuthController::class,'login'])                            ->name('customer.login');
+Route::post('customer/register',[CustomerAuthController::class,'register'])                      ->name('customer.register'); 
+Route::get('customer/register/view',[CustomerAuthController::class,'registerView'])              ->name('customer.register.view'); 
 Route::get('customer/logout',[CustomerAuthController::class, 'logout'])                          ->name('customer.logout');       
 
 
