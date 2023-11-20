@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\category\CategoryController;
 use App\Http\Controllers\subcategory\SubCategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductController;
@@ -35,7 +36,13 @@ Route::get('/show-cart',[CartController::class,'showCart'])                     
 Route::get('/checkout',[CheckoutController::class,'index'])                                      ->name('checkout');
 Route::post('new-cash-order',[CheckoutController::class,'newCashOrder'])                         ->name('new.cash.order');
 Route::get('complete-order',[CheckoutController::class,'completeOrder'])                         ->name('new.complete.order');
- 
+
+Route::get('customer/login/view',[CustomerAuthController::class,'index'])                        ->name('customer.login.view');
+Route::post('customer/login',[CustomerAuthController::class,'login'])                            ->name('customer.login');
+Route::get('customer/register',[CustomerAuthController::class,'register'])                       ->name('customer.register.view'); 
+Route::get('customer/logout',[CustomerAuthController::class, 'logout'])                          ->name('customer.logout');       
+
+
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');

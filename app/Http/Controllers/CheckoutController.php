@@ -57,6 +57,7 @@ class CheckoutController extends Controller
             $orderDetails->product_price    = $item->price;
             $orderDetails->product_qty      = $item->qty;
             $orderDetails->save();
+            Cart::remove($item->$rowId);
            }
            DB::commit();
            return redirect('complete-order')->with('message','Your order info post successfully');

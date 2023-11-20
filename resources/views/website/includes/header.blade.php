@@ -1,7 +1,12 @@
+<style>
+    .dp{
+        display: block !important;
+    }
+</style>
 <header class="header navbar-area">
 
     <div class="topbar">
-        <div class="container">
+        <div class="container dp" style="display: block !important;">
             <div class="row align-items-center">
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-left">
@@ -45,18 +50,35 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-end">
-                        <div class="user">
-                            <i class="lni lni-user"></i>
-                            Hello
-                        </div>
-                        <ul class="user-login">
-                            <li>
-                                <a href="login.html">Sign In</a>
-                            </li>
-                            <li>
-                                <a href="register.html">Register</a>
-                            </li>
-                        </ul>
+                        @if(Session::get('customer_id'))
+                             <div class="user">
+                                 <i class="lni lni-user"></i>
+                                 Hello {{ Session::get('customer_name') }}
+                                 
+                                 <ul class="user-login">
+                                    <li>
+                                        <a href="{{ route('customer.dashboard') }}">Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('customer.logout') }}">Logout</a>
+                                    </li>
+                                </ul>
+                                
+                             </div>
+                        
+                        @else
+                              <ul class="user-login">
+                                  <li>
+                                      <a href="{{ route('customer.login.view') }}">Sign In</a>
+                                  </li>
+                                  <li>
+                                      <a href="{{ route('customer.register.view') }}">Register</a>
+                                  </li>
+                              </ul>
+
+                        @endif
+                       
+                      
                     </div>
                 </div>
             </div>
