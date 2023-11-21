@@ -13,14 +13,38 @@ use Session;
 class CheckoutController extends Controller
 {
     public function index(){
-        return view('website.checkout.index');
+        if(Session::get('customer_id')){
+            $customerData = Customer::find(Session::get('customer_id'));
+        }
+        else{
+            $customerData='';
+        }
+        return view('website.checkout.index',compact('customerData'));
     }
 
     public function newCashOrder(Request $request){
         // dd($request->all());
        DB::beginTransaction();
        try{
-        $data = [
+        if(Session::get('customer_id')){
+            //customer is logged in
+            $customerData = Customer::find(Session::get('customer_id'));
+        }
+        else{
+            $validatedData = $request->validate([
+                'name'          => ['required'],
+                'address'       => ['required'],
+                'email'         => ['required|unique:customers','email'],
+                'mobile'        => ['required|unique:customers','mobile'],
+                // 'status'        => ['required'],
+            ], [
+                'name.required'        => 'Name is required',
+                'address.required'     => 'Address is required',
+                'email.required'       => 'Email is required',
+                'mobile.required'      => 'Mobile is required',
+            ]);
+
+             $data = [
             "name"              =>$request->name,
             "email"             =>$request->email,
             "mobile"            =>$request->mobile,
@@ -28,8 +52,12 @@ class CheckoutController extends Controller
             "address"           =>$request->delivery_address,
             "nid"               =>$request->nid,
            ];
-    
+         
            $customerData = Customer::create($data);
+           Session::put('customer_id',$customerData->id);
+           Session::put('customer_name',$customerData->name);
+        }
+       
     
            $orderData = new Order();
            $orderData->customer_id         = $customerData->id;
@@ -66,7 +94,8 @@ class CheckoutController extends Controller
         DB::rollBack();
 
         // For now, let's redirect back with an error message
-        return redirect()->back()->with('error', 'An error occurred while processing your order. Please try again.');
+        // return redirect()->back()->with('error', 'An error occurred while processing your order. Please try again.');
+        return redirect()->back();
     }
       
 

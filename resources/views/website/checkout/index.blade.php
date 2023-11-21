@@ -5,6 +5,7 @@
 @endsection
 
 @section('body')
+
     <div class="breadcrumbs">
         <div class="container">
             <div class="row align-items-center">
@@ -54,7 +55,14 @@
                                      <div class="single-form form-default">
                                          <label>Full Name</label>
                                          <div class="col-md-12 form-input form">
-                                             <input type="text" required name="name" placeholder="Full Name">
+                                            @if(isset($customerData->id))
+                                             <input type="text"  name="name" value="{{$customerData->name}}" placeholder="Full Name">
+                                             @else
+                                             <input type="text"  name="name"  placeholder="Full Name">
+                                             @error('name')
+                                             <span class="text-danger">{{ $message }}</span>
+                                             @enderror
+                                             @endif
                                          </div>
                                      </div>
                                     </div>
@@ -63,7 +71,16 @@
                                      <div class="single-form form-default">
                                          <label>Email Address</label>
                                          <div class="col-md-12 form-input form">
-                                             <input type="email" required name="email" placeholder="Email">
+                                            @if(isset($customerData->email))
+                                             <input type="email"  value="{{ $customerData->email }}" name="email" placeholder="Email">
+                                             @else
+                                             <input type="email"  name="email" placeholder="Email">
+
+                                             @error('email')
+                                             <span class="text-danger">{{ $message }}</span>
+                                             @enderror
+
+                                             @endif
                                          </div>
                                      </div>
                                     </div>
@@ -72,7 +89,16 @@
                                      <div class="single-form form-default">
                                          <label>Phone Number</label>
                                          <div class="col-md-12 form-input form">
-                                             <input type="tel" name="mobile" placeholder="Number">
+                                            @if(isset($customerData->mobile))
+                                             <input type="tel" name="mobile" value="{{$customerData->number}}" placeholder="Number">
+                                             @else
+                                             <input type="tel" name="mobile"  placeholder="Number">
+
+                                             @error('mobile')
+                                             <span class="text-danger">{{ $message }}</span>
+                                             @enderror
+
+                                             @endif
                                          </div>
                                      </div>
                                     </div>
@@ -81,9 +107,20 @@
                                      <div class="single-form form-default">
                                          <label>Delivery Address</label>
                                          <div class="col-md-12 form-input form">
+                                            @if(isset($customerData->address))
+                                            <textarea placeholder="Order Delivery Address" name="delivery_address">
+                                                {{ 
+                                                $customerData->address    
+                                                }}
+                                            </textarea>
+                                            @else
                                              <textarea placeholder="Order Delivery Address" name="delivery_address">
  
                                              </textarea>
+                                             @error('address')
+                                             <span class="text-danger">{{ $message }}</span>
+                                             @enderror
+                                             @endif
                                          </div>
                                      </div>
                                     </div>
@@ -92,7 +129,16 @@
                                         <div class="single-form form-default">
                                             <label>NID</label>
                                             <div class="col-md-12 form-input form">
-                                                <input type="text" name="nid" placeholder="Nid">
+                                                @if(isset($customerData->nid))
+                                                <input type="text" name="nid" value="{{ $customerData->nid }}"  placeholder="Nid">
+                                                @else
+                                                <input type="text" name="nid"  placeholder="Nid">
+                                                
+                                                @error('nid')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                
+                                                @endif
                                             </div>
                                         </div>
                                        </div>
