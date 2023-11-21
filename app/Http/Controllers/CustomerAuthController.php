@@ -17,7 +17,7 @@ class CustomerAuthController extends Controller
         if(password_verify($request->password,$customerData->password)){
             Session::put('customer_id',$customerData->id);
             Session::put('customer_name',$customerData->name);
-            return redirect('/customer-dashboard');
+            return redirect('customer/dashboard');
         }
         else{
             return back()->with('message','Invalid Password');
@@ -28,7 +28,16 @@ class CustomerAuthController extends Controller
        }
     }
 
+    public function logout(){
+        Session::forget('customer_id');
+        Session::forget('customer_name');
+    }
+
     public function register(Request $request){
         dd($request->all());
+    }
+
+    public function dashboard(){
+        return view('website.customer.customerDashboard');
     }
 }
