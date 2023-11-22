@@ -31,6 +31,7 @@ class CustomerAuthController extends Controller
     public function logout(){
         Session::forget('customer_id');
         Session::forget('customer_name');
+        return redirect()->route('home');
     }
 
     public function register(Request $request){

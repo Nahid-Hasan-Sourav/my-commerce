@@ -23,7 +23,7 @@ class CheckoutController extends Controller
     }
 
     public function newCashOrder(Request $request){
-        // dd($request->all());
+        
        DB::beginTransaction();
        try{
         if(Session::get('customer_id')){
@@ -31,18 +31,32 @@ class CheckoutController extends Controller
             $customerData = Customer::find(Session::get('customer_id'));
         }
         else{
-            $validatedData = $request->validate([
-                'name'          => ['required'],
-                'address'       => ['required'],
-                'email'         => ['required|unique:customers','email'],
-                'mobile'        => ['required|unique:customers','mobile'],
-                // 'status'        => ['required'],
-            ], [
-                'name.required'        => 'Name is required',
-                'address.required'     => 'Address is required',
-                'email.required'       => 'Email is required',
-                'mobile.required'      => 'Mobile is required',
-            ]);
+           
+            // $validatedData = $request->validate([
+            //     'name'          => ['required'],
+            //     'address'       => ['required'],
+            //     'email'         => ['required|unique:customers','email'],
+            //     'mobile'        => ['required|unique:customers','mobile'],
+            //     // 'status'        => ['required'],
+            // ], [
+            //     'name.required'        => 'Name is required',
+            //     'address.required'     => 'Address is required',
+            //     'email.required'       => 'Email is required',
+            //     'mobile.required'      => 'Mobile is required',
+            // ]);
+
+            // $validatedData = $request->validate([
+            //     'name'    => ['required'],
+            //     'address' => ['required'],
+            //     'email'   => ['required', 'email', 'unique:customers'],
+            //     'mobile'  => ['required', 'unique:customers'],
+            // ], [
+            //     'name.required'    => 'Name is required',
+            //     'address.required' => 'Address is required',
+            //     'email.required'   => 'Email is required',
+            //     'mobile.required'  => 'Mobile is required',
+            // ]);
+            
 
              $data = [
             "name"              =>$request->name,
@@ -78,6 +92,7 @@ class CheckoutController extends Controller
            $orderData->save();
     
            foreach(Cart::content() as $item){
+          
             $orderDetails = new OrderDetail();
             $orderDetails->order_id         = $orderData->id;
             $orderDetails->product_id       = $item->id;
@@ -85,17 +100,18 @@ class CheckoutController extends Controller
             $orderDetails->product_price    = $item->price;
             $orderDetails->product_qty      = $item->qty;
             $orderDetails->save();
-            Cart::remove($item->$rowId);
+            Cart::remove($item->rowId);
            }
            DB::commit();
-           return redirect('complete-order')->with('message','Your order info post successfully');
-       }catch (\Exception $e) {
+           return redirect('/complete-order')->with('message','Your order info post successfully');
+       }
+       catch (\Exception $e) {
         // If an exception occurs, roll back the transaction
         DB::rollBack();
 
         // For now, let's redirect back with an error message
-        // return redirect()->back()->with('error', 'An error occurred while processing your order. Please try again.');
-        return redirect()->back();
+        return redirect()->back()->with('error', 'An error occurred while processing your order. Please try again.');
+        // return redirect()->back();
     }
       
 

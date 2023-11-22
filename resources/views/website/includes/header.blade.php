@@ -1,7 +1,8 @@
 <style>
-    .dp{
+    .dp {
         display: block !important;
     }
+
 </style>
 <header class="header navbar-area">
 
@@ -51,34 +52,44 @@
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-end">
                         @if(Session::get('customer_id'))
-                             <div class="user">
-                                 <i class="lni lni-user"></i>
-                                 Hello {{ Session::get('customer_name') }}
-                                 
-                                 <ul class="user-login">
-                                    <li>
-                                        <a href="{{ route('customer.dashboard') }}">Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('customer.logout') }}">Logout</a>
-                                    </li>
-                                </ul>
-                                
-                             </div>
-                        
+                        <div class="user">
+                            <i class="lni lni-user"></i>
+                            Hello {{ Session::get('customer_name') }}
+
+                            <ul class="user-login">
+                                <li>
+                                    <a href="{{ route('customer.dashboard') }}">Dashboard</a>
+                                </li>
+                                <li>
+                                    {{-- <a href="#" onclick="event.preventDefault() document.getElementById('#logoutForm')">Logout</a>
+
+                                        <form id="logoutForm" method="POST" action="{{ route('customer.logout') }}">
+                                    @csrf
+                                    </form> --}}
+
+                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>
+
+                                    <form id="logoutForm" method="POST" action="{{ route('customer.logout') }}">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </ul>
+
+                        </div>
+
                         @else
-                              <ul class="user-login">
-                                  <li>
-                                      <a href="{{ route('customer.login.view') }}">Sign In</a>
-                                  </li>
-                                  <li>
-                                      <a href="{{ route('customer.register.view') }}">Register</a>
-                                  </li>
-                              </ul>
+                        <ul class="user-login">
+                            <li>
+                                <a href="{{ route('customer.login.view') }}">Sign In</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('customer.register.view') }}">Register</a>
+                            </li>
+                        </ul>
 
                         @endif
-                       
-                      
+
+
                     </div>
                 </div>
             </div>
@@ -156,28 +167,22 @@
                                     <ul class="shopping-list">
                                         @php($sum = 0)
                                         @foreach (Cart::content() as $singleCart)
-                                            <li>
-                                                <button class="remove btn-sm" title="Remove this item"
-                                                    onclick="deleteItem('{{ $singleCart->rowId }}')"><i
-                                                        class="lni lni-close"></i></button>
-                                                <div class="cart-img-head">
-                                                    <a class="cart-img" href="product-details.html"><img
-                                                            src="{{ asset($singleCart->options['image']) }}"
-                                                            alt="#"></a>
-                                                </div>
-                                                <div class="content">
-                                                    <h4>
-                                                    </h4>
-                                                    <a
-                                                        href="{{ route('product.singleDetails', ['id' => $singleCart->id]) }}">
-                                                        {{ $singleCart->name }}
-                                                    </a>
-                                                    </h4>
-                                                    <p class="quantity">1x - <span
-                                                            class="amount">{{ $singleCart->price }}</span></p>
-                                                </div>
-                                            </li>
-                                            @php($sum = $sum + $singleCart->price)
+                                        <li>
+                                            <button class="remove btn-sm" title="Remove this item" onclick="deleteItem('{{ $singleCart->rowId }}')"><i class="lni lni-close"></i></button>
+                                            <div class="cart-img-head">
+                                                <a class="cart-img" href="product-details.html"><img src="{{ asset($singleCart->options['image']) }}" alt="#"></a>
+                                            </div>
+                                            <div class="content">
+                                                <h4>
+                                                </h4>
+                                                <a href="{{ route('product.singleDetails', ['id' => $singleCart->id]) }}">
+                                                    {{ $singleCart->name }}
+                                                </a>
+                                                </h4>
+                                                <p class="quantity">1x - <span class="amount">{{ $singleCart->price }}</span></p>
+                                            </div>
+                                        </li>
+                                        @php($sum = $sum + $singleCart->price)
                                         @endforeach
 
 
@@ -212,25 +217,25 @@
                         {{-- {{ dd($categories) }} --}}
                         <ul class="sub-category">
                             @foreach ($categories as $categorie)
-                                {{-- {{ dd($categorie)}} --}}
-                                <li>
-                                    <a href="{{ route('product.category', ['id' => $categorie->id]) }}">{{ $categorie->name }}
-                                        @if (count($categorie->subCategory) > 0)
-                                            <i class="lni lni-chevron-right"></i>
-                                        @endif
-
-                                    </a>
+                            {{-- {{ dd($categorie)}} --}}
+                            <li>
+                                <a href="{{ route('product.category', ['id' => $categorie->id]) }}">{{ $categorie->name }}
                                     @if (count($categorie->subCategory) > 0)
-                                        <ul class="inner-sub-category">
-                                            @if (isset($categorie->subCategory))
-                                                {{-- {{ dd($categories->subCategory) }} --}}
-                                                @foreach ($categorie->subCategory as $data)
-                                                    <li><a href="product-grids.html">{{ $data->name }}</a></li>
-                                                @endforeach
-                                            @endif
-                                        </ul>
+                                    <i class="lni lni-chevron-right"></i>
                                     @endif
-                                </li>
+
+                                </a>
+                                @if (count($categorie->subCategory) > 0)
+                                <ul class="inner-sub-category">
+                                    @if (isset($categorie->subCategory))
+                                    {{-- {{ dd($categories->subCategory) }} --}}
+                                    @foreach ($categorie->subCategory as $data)
+                                    <li><a href="product-grids.html">{{ $data->name }}</a></li>
+                                    @endforeach
+                                    @endif
+                                </ul>
+                                @endif
+                            </li>
                             @endforeach
 
                         </ul>
@@ -238,9 +243,7 @@
 
 
                     <nav class="navbar navbar-expand-lg">
-                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="toggler-icon"></span>
                             <span class="toggler-icon"></span>
                             <span class="toggler-icon"></span>
@@ -251,9 +254,7 @@
                                     <a href="index.html" class="active" aria-label="Toggle navigation">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                        data-bs-target="#submenu-1-2" aria-controls="navbarSupportedContent"
-                                        aria-expanded="false" aria-label="Toggle navigation">Pages</a>
+                                    <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#submenu-1-2" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Pages</a>
                                     <ul class="sub-menu collapse" id="submenu-1-2">
                                         <li class="nav-item"><a href="about-us.html">About Us</a></li>
                                         <li class="nav-item"><a href="faq.html">Faq</a></li>
@@ -264,9 +265,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                        data-bs-target="#submenu-1-3" aria-controls="navbarSupportedContent"
-                                        aria-expanded="false" aria-label="Toggle navigation">Shop</a>
+                                    <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#submenu-1-3" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Shop</a>
                                     <ul class="sub-menu collapse" id="submenu-1-3">
                                         <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
                                         <li class="nav-item"><a href="product-list.html">Shop List</a></li>
@@ -276,9 +275,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                        data-bs-target="#submenu-1-4" aria-controls="navbarSupportedContent"
-                                        aria-expanded="false" aria-label="Toggle navigation">Blog</a>
+                                    <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#submenu-1-4" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Blog</a>
                                     <ul class="sub-menu collapse" id="submenu-1-4">
                                         <li class="nav-item"><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a>
                                         </li>
@@ -323,35 +320,35 @@
         function deleteItem(rowId) {
             //  console.log("row id",rowId);
             Swal.fire({
-                title: 'Are you sure?',
-                text: 'You won\'t be able to revert this!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                title: 'Are you sure?'
+                , text: 'You won\'t be able to revert this!'
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#3085d6'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Yes, delete it!'
 
             }).then((res) => {
                 console.log("Response alert", res)
                 if (res.isConfirmed) {
                     $.ajaxSetup({
                         headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                        },
-                    });
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                        , }
+                    , });
 
                     $.ajax({
-                        url: "/delete-cart-item/" + rowId,
-                        type: "DELETE",
+                        url: "/delete-cart-item/" + rowId
+                        , type: "DELETE",
 
                         success: function(response) {
                             console.log("After Delete ", response)
                             if (response.status == "success") {
                                 Swal.fire({
-                                    title: 'Deleted!',
-                                    text: response.message,
-                                    icon: 'success',
-                                    timer: 5000
+                                    title: 'Deleted!'
+                                    , text: response.message
+                                    , icon: 'success'
+                                    , timer: 5000
                                 });
                                 // Get the current URL dynamically
                                 var currentUrl = window.location.href;
@@ -363,18 +360,19 @@
                             // console.log("Id", response);
 
 
-                        },
-                        error: function(xhr, status, error) {
+                        }
+                        , error: function(xhr, status, error) {
                             console.log("Error: ", error);
                             var response = JSON.parse(xhr.responseText);
                             console.log("Error Message: ", response.message);
-                        },
-                    });
+                        }
+                    , });
 
 
                 }
             });
 
         }
+
     </script>
 </header>
